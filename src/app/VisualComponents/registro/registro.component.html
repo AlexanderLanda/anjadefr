@@ -1,0 +1,160 @@
+<!-- registro.component.html -->
+<mat-card>
+  <mat-card-content *ngIf="!mostrarFormulario">
+    <div class="header">
+      <h1>Solicitud de Afiliación </h1>
+    </div>
+    <form (ngSubmit)="onRegistro()" name="registroForm" [formGroup]="registroForm">
+
+      <div class="apellidosInput">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Apellidos:</mat-label>
+          <input type="text" formControlName="apellidos" matInput placeholder="Entra tus apellidos" required />
+          <mat-error *ngIf="!registroForm.controls['apellidos'].valid">
+            Se requiere apellidos
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="nombre-dni">
+        <mat-form-field class="normal-width" appearance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input formControlName="nombre" matInput placeholder="Entra tu nombre" required />
+          <mat-error *ngIf="!registroForm.controls['nombre'].valid">
+            Se requiere nombre
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="little-width" appearance="outline">
+          <mat-label>Tipo de documento:</mat-label>
+          <mat-select formControlName="tipoDocumento" [(value)]="selectedTipoDocumento">
+            <mat-option *ngFor="let option of tiposDocumentaciones" [value]="option.id">{{ option.descripcion }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="fecha-nie">
+        <mat-form-field class="normal-width">
+          <mat-label>Fecha de nacimiento:</mat-label>
+          <input formControlName="fechaNacimiento" matInput [matDatepicker]="picker">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="little-width" appearance="outline">
+          <mat-label>Documento:</mat-label>
+          <input formControlName="documento" matInput placeholder="Entra tu número de documentación" required />
+          <mat-error *ngIf="!registroForm.controls['documento'].valid">
+            Se requiere número de documentación
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="correo" matInput placeholder="Entra tu dirección email" required />
+          <mat-error *ngIf="!registroForm.controls['correo'].valid">
+            Se requiere email
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="direccion-postal">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Domicilio:</mat-label>
+          <input formControlName="direccion" matInput placeholder="Entra tu dirección de domicilio" required />
+          <mat-error *ngIf="!registroForm.controls['direccion'].valid">
+            Se requiere direccion de domicilio valida
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="postal-telefono">
+        <mat-form-field class="normal-width" appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input formControlName="telefono" matInput placeholder="Entra tu número de teléfono" required />
+          <mat-error *ngIf="!registroForm.controls['telefono'].valid">
+            Se requiere teléfono numerico
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="little-width" appearance="outline">
+          <mat-label>C.P:</mat-label>
+          <input formControlName="codigoPostal" matInput inputmode="numeric" placeholder="Entra tu código postal"
+            pattern="[0-9]*" required />
+          <mat-error *ngIf="!registroForm.controls['codigoPostal'].valid">
+            Se requiere código postal numerico.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="localidad-provincia">
+        <mat-form-field class="select-width" appearance="outline">
+          <mat-label>Provincia</mat-label>
+          <mat-select formControlName="provincia" [(value)]="selectedProvincia"
+            (selectionChange)="updateLocalidades($event.value)">
+            <mat-option *ngFor="let option of provincias" [value]="option.id">{{ option.descripcion }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="select-width-right" appearance="outline">
+          <mat-label>Localidad</mat-label>
+          <mat-select formControlName="localidad" [(value)]="selectedLocalidad">
+            <mat-option *ngFor="let option of filteredLocalidades" [value]="option.id">{{ option.descripcion
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="select-width" appearance="outline">
+          <mat-label class="width-select">Deportes</mat-label>
+          <mat-select formControlName="deporte" [(value)]="selectedDeporte">
+            <mat-option *ngFor="let option of deportes" [value]="option.id">{{ option.nombre }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="select-width-right" appearance="outline" align="end">
+          <mat-label>Función</mat-label>
+          <mat-select formControlName="afiliadosFuncion" [(value)]="selectedFuncion">
+            <mat-option *ngFor="let option of afiliadosFunciones" [value]="option.id">{{ option.descripcion
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="categoria-rolUsuario">
+        <mat-form-field class="categoria" appearance="outline">
+          <mat-label>Categoría</mat-label>
+          <mat-select formControlName="afiliadosCategoria" [(value)]="selectedafiliadosCategoria">
+            <mat-option *ngFor="let option of categorias" [value]="option.id">{{ option.descripcion }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+            <mat-radio-group class="situacionActual" formControlName="situacionActual" [(ngModel)]="selectedSituacionActual">
+              <mat-radio-button [value]="activo">Activo</mat-radio-button>
+              <mat-radio-button [value]="ex">Ex</mat-radio-button>
+            </mat-radio-group>
+      </div>
+    
+      <div class="cuota-periodicidad">
+        <mat-card>
+          <p>Deberas abonar 5 euros por afiliarte(correspondiente a insignia y targeta de afiliación) más una cuota anual de 20 euros.
+          </p>
+          <!--<mat-card-header>
+            <div class="mat-card-header-text" >Forma de pago</div>
+          </mat-card-header>
+        -->
+            <div>
+              <mat-radio-group formControlName="tipoPago" [(ngModel)]="selectedFormaPago">
+                <mat-radio-button [value]="1">Targeta de Crédito</mat-radio-button>
+                <mat-radio-button [value]="2">Bizum</mat-radio-button>
+                <mat-radio-button [value]="3">Transferencia Bancaria</mat-radio-button>
+                <mat-radio-button [value]="4">Caja</mat-radio-button>
+              </mat-radio-group>
+              <p >"Cuenta CaixaBank : ES-90-2100-3421-54-2200159778"</p>
+            </div>
+            
+            
+
+        </mat-card>
+      </div>
+      <button mat-flat-button color="primary" style="background-color: rgba(38, 24, 245, 0.795); margin-left: 50px;"
+        class="center-button-registrar">Registrar</button>
+
+    </form>
+  </mat-card-content>
+</mat-card>
+<ng-container *ngIf="mostrarFormulario">
+  <!-- Aquí se muestra el componente FormularioComponent -->
+ <app-formulario *ngIf="mostrarFormulario" [usuario]="usuarioRegistrado"></app-formulario>
+</ng-container>

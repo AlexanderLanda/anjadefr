@@ -1,0 +1,11 @@
+<!-- success.component.html -->
+<div *ngIf="mostrarFormulario" class="modal">
+    <div class="modal-content">
+      <h2>Pago efectuado correctamente</h2>
+      <button (click)="closeModal()">Aceptar</button>
+    </div>
+  </div>
+<ng-container *ngIf="!mostrarFormulario">
+    <!-- Aquí se muestra el componente FormularioComponent -->
+   <app-formulario *ngIf="!mostrarFormulario" ></app-formulario>
+  </ng-container>

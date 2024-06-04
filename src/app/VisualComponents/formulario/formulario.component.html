@@ -1,0 +1,148 @@
+<mat-card>
+  <mat-card-content>
+    <div class="header">
+      <h1>Cuestionario de afiliación</h1>
+    </div>
+    <div class="header">
+      <h3>"No es de obligado cumplimiento"</h3><a href="/home">Omitir</a>
+    </div>
+    <mat-card class="cuestionario">
+      <mat-card-content>
+        <form (ngSubmit)="onRegistrarFormulario()" name="formularioForm" [formGroup]="formularioForm">
+          <div class="formulario">
+
+            <div class="campo">
+              <label for="profesion">Número de Afiliación:</label>
+              <input formControlName="idAfiliacion" type="text" id="idAfiliacion" name="idAfiliacion">
+              <mat-error *ngIf="!formularioForm.controls['idAfiliacion'].valid">
+                Se requiere número de afiliación obligatorio. Revisar correo de bienvenida.
+              </mat-error>
+            </div>
+            <div class="campo">
+              <label for="profesion">Profesión Laboral:</label>
+              <input formControlName="profesionLaboral" type="text" id="profesion" name="profesion">
+            </div>
+            <div class="campo">
+              <label for="situacionActual">Situación Actual:</label>
+              <input type="text" formControlName="situacionActual" id="situacionActual" name="situacionActual">
+            </div>
+            <div class="campo">
+              <label for="deporte">Deporte:</label>
+              <mat-form-field class="full-width-select" appearance="outline">
+                <mat-select formControlName="deporte">
+                  <mat-option *ngFor="let deporte of deportes" [value]="deporte.id">{{ deporte.nombre }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="campo">
+              <label for="anosActivoCategorias">Años en Activo y Categorías:</label>
+              <input type="text" formControlName="anosActivoCategorias" id="aniosActividad" name="aniosActividad">
+            </div>
+            <div class="campo">
+              <label for="otrasActividades">Otras Actividades que Practicas:</label>
+              <input type="text" formControlName="otrasActividades" id="otrasActividades" name="otrasActividades">
+            </div>
+            <div class="campo">
+              <label for="colaborarAsociacion">Quieres colaborar con la asociación:</label>
+              <mat-radio-group formControlName="colaborarAsociacion" [(ngModel)]="selectedcolaboracion">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="tipoColaboracion">En qué te gustaría colaborar:</label>
+              <input type="text" id="enQueColaborar" formControlName="tipoColaboracion" name="tipoColaboracion">
+            </div>
+            <div class="campo">
+              <label for="comisionColaboracion">En qué comisión te gustaría colaborar:</label>
+              <input type="text" formControlName="comisionColaboracion" id="comisionColaboracion" name="comisionColaboracion">
+            </div>
+            <div class="campo">
+              <label for="idiomas">Qué idiomas practicas:</label>
+              <mat-form-field class="full-width-select" appearance="outline">
+                <mat-select formControlName="idiomas" multiple>
+                  <mat-option *ngFor="let idioma of idiomasLista" [value]="idioma">{{ idioma }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error *ngIf="formularioForm.controls['idiomas'].hasError('required')">
+                Se requiere seleccionar al menos un idioma frecuente.
+              </mat-error>
+            </div>
+            <div class="campo">
+              <label for="tiempoLibre">Tienes tiempo libre:</label>
+              <mat-radio-group formControlName="tiempoLibre">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="desplazamiento">Puedes desplazarte:</label>
+              <mat-radio-group formControlName="desplazamiento">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="delegacionColaboracion">Quieres colaborar en una delegación:</label>
+              <mat-radio-group formControlName="delegacionColaboracion">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="darClases">Te gustaría dar clases:</label>
+              <mat-radio-group formControlName="selectedDarClases">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="darClases"> Clases de qué:</label>
+              <input type="text" formControlName="darClases" id="darClases" name="darClases">
+            </div>
+            <div class="campo">
+              <label for="organizarEventosDeportivos">Te interesa organizar eventos deportivos:</label>
+              <mat-radio-group formControlName="organizarEventosDeportivos">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="reunionesAsociacion">Te interesa organizar reuniones de la asociación:</label>
+              <mat-radio-group formControlName="reunionesAsociacion">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="mediador">Te gusta participar como mediador:</label>
+              <mat-radio-group formControlName="mediador">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="ayudaAgresiones">Te gusta ayudar cuando hay agresiones:</label>
+              <mat-radio-group formControlName="ayudaAgresiones">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="campo">
+              <label for="opinionAsociacion">Qué representa para ti la asociación:</label>
+              <textarea class="full-width" id="opinionAsociacion" name="opinionAsociacion" rows="4"
+                formControlName="opinionAsociacion"></textarea>
+            </div>
+            <div class="campo">
+              <label for="mejorasAsociacion">En qué debería mejorar la asociación:</label>
+              <textarea class="full-width" name="mejorasAsociacion" rows="4"
+                formControlName="mejorasAsociacion"></textarea>
+            </div>
+            <button mat-flat-button color="primary" style="background-color: rgba(38, 24, 245, 0.795); "
+        class="button_registrar">Registrar</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

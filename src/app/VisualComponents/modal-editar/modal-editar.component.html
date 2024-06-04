@@ -1,0 +1,53 @@
+<!-- registro.component.html -->
+<mat-card>
+    <mat-card-content *ngIf="!mostrarFormulario">
+      <div class="header">
+        <h1>Editar perfil de Afiliación </h1>
+      </div>
+      <form (ngSubmit)="onRegistro()" name="registroForm" [formGroup]="registroForm">
+  
+        <mat-card class="datos-fijos">
+            <mat-card-content >
+                <div class="nombre-apellidos">
+                    <h2>Nombre: {{ data.fila.nombre }} {{ data.fila.apellidos }}</h2>
+                </div>
+                <div class="categoria-rolUsuario">
+                    <mat-form-field class="select-width" appearance="outline">
+                      <mat-label>Roles</mat-label>
+                      <mat-select formControlName="usuariorol" [(value)]="selectedUsuariorol">
+                        <mat-option *ngFor="let option of usuariosRoles" [value]="option.id">{{ option.descripcion }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="categoria-rolUsuario">
+                    <mat-form-field class="select-width" appearance="outline">
+                      <mat-label>Estado Cuenta</mat-label>
+                      <mat-select formControlName="estadoCuenta" [(value)]="selectedEstadoUsuario">
+                        <mat-option *ngFor="let option of estadosUsuariosList" [value]="option.id">{{ option.estado }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="password-fields" *ngIf="showPasswordFields">
+                  <mat-form-field class="select-width" appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput formControlName="password" type="password">
+                  </mat-form-field>
+                  <mat-form-field class="select-width" appearance="outline">
+                    <mat-label>Confirmar Contraseña</mat-label>
+                    <input matInput formControlName="confirmPassword" type="password">
+                  </mat-form-field>
+                </div>
+                
+            </mat-card-content>
+        </mat-card>
+        <button mat-flat-button color="primary" style="background-color: rgba(38, 24, 245, 0.795); "
+          class="center-button-registrar">Guardar</button>
+  
+      </form>
+  
+      <div class="button-row">
+  
+      </div>
+    </mat-card-content>
+  </mat-card>
