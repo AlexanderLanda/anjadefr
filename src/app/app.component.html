@@ -1,40 +1,30 @@
-<mat-toolbar color="primary" class="menu-principal" [ngClass]="{'fixed-toolbar': isHomePage}">
-  <div class="menu-barra">
-    <div class="menu-buttons">
-      <button mat-button routerLink="/home">Inicio</button>
-      <button mat-button routerLink="/registro">Afiliación</button>
-      <button mat-button [matMenuTriggerFor]="subMenuNoticias">Noticias</button>
-      <mat-menu #subMenuNoticias="matMenu">
-        <button mat-menu-item class="custom-menu-item" routerLink="/noticias-anjade">Noticias Anjade</button>
-        <button mat-menu-item class="custom-menu-item" routerLink="/noticias-deportivas">Noticias Deportivas</button>
-      </mat-menu>
-      <button mat-button [matMenuTriggerFor]="subMenuSugerencias">Sugerencias</button>
-      <mat-menu #subMenuSugerencias="matMenu">
-        <button mat-menu-item class="custom-menu-item" routerLink="/comunicacion-problemas">Comunicación
-          Problemas</button>
-        <button mat-menu-item class="custom-menu-item" routerLink="/comunicacion-sucesos">Comunicación Sucesos</button>
-      </mat-menu>
-      <button mat-button routerLink="/juridico">Jurídico</button>
-      <button mat-button routerLink="/formacion">Formación</button>
-      <button mat-button routerLink="/deportivos">Deportivos</button>
-      <button mat-button routerLink="/Multimedia">Multimedia</button>
-      <button mat-button routerLink="/delegaciones">Delegaciones</button>
-      <button mat-button routerLink="/comisiones">Comisiones</button>
-      <button mat-button [matMenuTriggerFor]="subMenuInfo">Información</button>
-      <mat-menu #subMenuInfo="matMenu">
-        <button mat-menu-item class="custom-menu-item" (click)="downloadEstatutos()">
-          <mat-icon>cloud_download</mat-icon> Estatutos
-        </button>
-      </mat-menu>
-      <button mat-button routerLink="/redsys">Contacto</button>
-      <button mat-button *ngIf="isLoggedIn() && isAdminUser()" [matMenuTriggerFor]="subMenuAdmin">Administración</button>
-      <mat-menu #subMenuAdmin="matMenu">
-        <button mat-menu-item class="custom-menu-item" routerLink="/listausuarios">Administración de
-          afiliados</button>
-      </mat-menu>
-      <button mat-button *ngIf="isLoggedIn()" routerLink="/home" (click)="logout()">Cerrar Sesión</button>
-      <button mat-button *ngIf="!isLoggedIn()" routerLink="/login">Iniciar Sesión</button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Tu Marca</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inicio</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Submenú
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item"  href="#">Submenú 1</a>
+            <a class="dropdown-item" href="#">Submenú 2</a>
+            <a class="dropdown-item" href="#">Submenú 3</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Otra Página</a>
+        </li>
+        <!-- Añade más elementos de menú según sea necesario -->
+      </ul>
     </div>
   </div>
-</mat-toolbar>
-<router-outlet></router-outlet>
+</nav>

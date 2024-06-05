@@ -51,7 +51,7 @@ import { ModalEditarComponent } from '../modal-editar/modal-editar.component';
   templateUrl: './usuarios-tabla.component.html',
   styleUrl: './usuarios-tabla.component.css'
 })
-export default class UsuariosTablaComponent implements AfterViewInit {
+export  class UsuariosTablaComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['apellidos', 'nombre', 'funcion','estadoFuncion', 'categoria', 'deporte','provincia', 'estado','rolAfiliado','editar'];
   listadoUsuarios : UsuariosDto[] | undefined;

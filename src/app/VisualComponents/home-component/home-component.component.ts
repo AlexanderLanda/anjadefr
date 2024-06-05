@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import { RouterLink, RouterModule } from '@angular/router';
-import RegistroComponentComponent from '../registro/registro.component';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -12,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './home-component.component.html',
   styleUrl: './home-component.component.css'
 })
-export default class HomeComponentComponent {
+export  class HomeComponentComponent {
 
 
 }

@@ -23,7 +23,7 @@ import { AuthService } from '../../Core/Service/Implements/AuthService';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export default class LoginComponent {
+export  class LoginComponent {
   
   loginForm: FormGroup;
   hide = true;

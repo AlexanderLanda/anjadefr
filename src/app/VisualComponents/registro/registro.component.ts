@@ -69,7 +69,7 @@ import { OriginInterceptor } from '../../Core/OriginInterceptor';
       },
     ],
 })
-export default class RegistroComponentComponent {
+export  class RegistroComponentComponent {
 
   hide: boolean = true;
   registroForm: FormGroup;

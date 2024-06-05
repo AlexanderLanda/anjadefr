@@ -14,7 +14,7 @@ import { OriginRequest } from '../../Core/Service/Implements/OriginRequest';
   templateUrl: './redsys.component.html',
   styleUrl: './redsys.component.css'
 })
-export default class RedsysComponent {
+export  class RedsysComponent {
 
    usuario = {
   "id_user": 36,
