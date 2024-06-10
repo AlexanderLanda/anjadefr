@@ -11,13 +11,15 @@ export class PaymentService {
 
   constructor(private http: HttpClient) { }
 
-  createPayment(tipoPado: number): Observable<any> {
-    let params = new HttpParams().set('tipoPago', tipoPado.toString());
+  createPayment(tipoPado: number, idAfiliacion: string): Observable<any> {
+    let params = new HttpParams()
+    .set('tipoPago', tipoPado.toString())
+    .set('idAfiliacion', idAfiliacion);
     return this.http.post(this.apiUrl, {}, { params });
   }
 
-  pay(tipoPago: number) {
-    this.createPayment(tipoPago).subscribe(response => {
+  pay(tipoPago: number, idAfiliacion: string) {
+    this.createPayment(tipoPago,idAfiliacion).subscribe(response => {
       const form = document.createElement('form');
       form.setAttribute('name', 'form');
       form.setAttribute('method', 'POST');

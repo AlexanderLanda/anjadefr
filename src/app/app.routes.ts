@@ -42,5 +42,9 @@ export const routes: Routes = [
     { 
         path: 'failure', 
         loadComponent: () => import('./VisualComponents/failure/failure.component')  
+    },
+    { 
+        path: 'junta', 
+        loadComponent: () => import('./VisualComponents/junta-directiva/junta-directiva.component').then((c) => c.JuntaDirectivaComponent),  
     }
 ];

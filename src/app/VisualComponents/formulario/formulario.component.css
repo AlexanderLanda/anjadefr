@@ -1,3 +1,4 @@
+/*
 .formulario {
     width: 400px;
     margin: auto;
@@ -41,4 +42,9 @@
     text-align: center;
     max-height: 1800px;
   }
-  
+  */
+.formulario-container {
+  margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+}
+
+

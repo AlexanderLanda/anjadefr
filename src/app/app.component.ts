@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AuthService } from './Core/Service/Implements/AuthService';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OriginInterceptor } from './Core/OriginInterceptor';
+import { MenuNavBarComponent } from './VisualComponents/menu-nav-bar/menu-nav-bar.component';
 
 
 @Component({
@@ -38,6 +39,7 @@ import { OriginInterceptor } from './Core/OriginInterceptor';
     MatNativeDateModule,
     MatFormFieldModule,
     RouterLink,
+    MenuNavBarComponent
     
   ],
   providers: [
@@ -51,44 +53,6 @@ import { OriginInterceptor } from './Core/OriginInterceptor';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'anjadefr';
-  isHomePage: boolean = false;
-
-  constructor(private router: Router,private authService: AuthService) {}
-  ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.isHomePage = this.router.url === '/home';
-      }
-    });
-  }
-  isUserAuthorized(): boolean {
-    const user = this.authService.getCurrentUser();
-    if (!user) {
-      return false;
-    }
-    const validRoles = ['presidente', 'comisionados', 'secretarias','administrador'];
-    return validRoles.includes(user.usuariorol.descripcion) && user.estadoCuenta.estado === 'activo';
-  }
-  downloadEstatutos(){
-    // Ruta del documento Word
-    const url = '/assets/documentos/estatutos.docx';
-    // Descargar el documento Word
-    window.location.href = url;
-    // Imprimir mensaje en la consola
-    console.log('Descarga realizada con éxito');
-}
-
-isLoggedIn(): boolean {
-  return this.authService.isLoggedIn();
-}
-
-isAdminUser(): boolean {
-  return this.authService.isAdminUser();
-}
-
-logout(): void {
-  this.authService.logout();
-}
+  
 }
 export class InterceptorModule {}

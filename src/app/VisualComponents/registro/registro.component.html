@@ -1,160 +1,186 @@
-<!-- registro.component.html -->
-<mat-card>
-  <mat-card-content *ngIf="!mostrarFormulario">
-    <div class="header">
-      <h1>Solicitud de Afiliación </h1>
-    </div>
-    <form (ngSubmit)="onRegistro()" name="registroForm" [formGroup]="registroForm">
-
-      <div class="apellidosInput">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Apellidos:</mat-label>
-          <input type="text" formControlName="apellidos" matInput placeholder="Entra tus apellidos" required />
-          <mat-error *ngIf="!registroForm.controls['apellidos'].valid">
-            Se requiere apellidos
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="nombre-dni">
-        <mat-form-field class="normal-width" appearance="outline">
-          <mat-label>Nombre:</mat-label>
-          <input formControlName="nombre" matInput placeholder="Entra tu nombre" required />
-          <mat-error *ngIf="!registroForm.controls['nombre'].valid">
-            Se requiere nombre
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="little-width" appearance="outline">
-          <mat-label>Tipo de documento:</mat-label>
-          <mat-select formControlName="tipoDocumento" [(value)]="selectedTipoDocumento">
-            <mat-option *ngFor="let option of tiposDocumentaciones" [value]="option.id">{{ option.descripcion }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="fecha-nie">
-        <mat-form-field class="normal-width">
-          <mat-label>Fecha de nacimiento:</mat-label>
-          <input formControlName="fechaNacimiento" matInput [matDatepicker]="picker">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field class="little-width" appearance="outline">
-          <mat-label>Documento:</mat-label>
-          <input formControlName="documento" matInput placeholder="Entra tu número de documentación" required />
-          <mat-error *ngIf="!registroForm.controls['documento'].valid">
-            Se requiere número de documentación
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Email</mat-label>
-          <input formControlName="correo" matInput placeholder="Entra tu dirección email" required />
-          <mat-error *ngIf="!registroForm.controls['correo'].valid">
-            Se requiere email
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="direccion-postal">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Domicilio:</mat-label>
-          <input formControlName="direccion" matInput placeholder="Entra tu dirección de domicilio" required />
-          <mat-error *ngIf="!registroForm.controls['direccion'].valid">
-            Se requiere direccion de domicilio valida
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="postal-telefono">
-        <mat-form-field class="normal-width" appearance="outline">
-          <mat-label>Teléfono</mat-label>
-          <input formControlName="telefono" matInput placeholder="Entra tu número de teléfono" required />
-          <mat-error *ngIf="!registroForm.controls['telefono'].valid">
-            Se requiere teléfono numerico
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="little-width" appearance="outline">
-          <mat-label>C.P:</mat-label>
-          <input formControlName="codigoPostal" matInput inputmode="numeric" placeholder="Entra tu código postal"
-            pattern="[0-9]*" required />
-          <mat-error *ngIf="!registroForm.controls['codigoPostal'].valid">
-            Se requiere código postal numerico.
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="localidad-provincia">
-        <mat-form-field class="select-width" appearance="outline">
-          <mat-label>Provincia</mat-label>
-          <mat-select formControlName="provincia" [(value)]="selectedProvincia"
-            (selectionChange)="updateLocalidades($event.value)">
-            <mat-option *ngFor="let option of provincias" [value]="option.id">{{ option.descripcion }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="select-width-right" appearance="outline">
-          <mat-label>Localidad</mat-label>
-          <mat-select formControlName="localidad" [(value)]="selectedLocalidad">
-            <mat-option *ngFor="let option of filteredLocalidades" [value]="option.id">{{ option.descripcion
-              }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field class="select-width" appearance="outline">
-          <mat-label class="width-select">Deportes</mat-label>
-          <mat-select formControlName="deporte" [(value)]="selectedDeporte">
-            <mat-option *ngFor="let option of deportes" [value]="option.id">{{ option.nombre }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="select-width-right" appearance="outline" align="end">
-          <mat-label>Función</mat-label>
-          <mat-select formControlName="afiliadosFuncion" [(value)]="selectedFuncion">
-            <mat-option *ngFor="let option of afiliadosFunciones" [value]="option.id">{{ option.descripcion
-              }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="categoria-rolUsuario">
-        <mat-form-field class="categoria" appearance="outline">
-          <mat-label>Categoría</mat-label>
-          <mat-select formControlName="afiliadosCategoria" [(value)]="selectedafiliadosCategoria">
-            <mat-option *ngFor="let option of categorias" [value]="option.id">{{ option.descripcion }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-            <mat-radio-group class="situacionActual" formControlName="situacionActual" [(ngModel)]="selectedSituacionActual">
-              <mat-radio-button [value]="activo">Activo</mat-radio-button>
-              <mat-radio-button [value]="ex">Ex</mat-radio-button>
-            </mat-radio-group>
-      </div>
-    
-      <div class="cuota-periodicidad">
-        <mat-card>
-          <p>Deberas abonar 5 euros por afiliarte(correspondiente a insignia y targeta de afiliación) más una cuota anual de 20 euros.
-          </p>
-          <!--<mat-card-header>
-            <div class="mat-card-header-text" >Forma de pago</div>
-          </mat-card-header>
-        -->
-            <div>
-              <mat-radio-group formControlName="tipoPago" [(ngModel)]="selectedFormaPago">
-                <mat-radio-button [value]="1">Targeta de Crédito</mat-radio-button>
-                <mat-radio-button [value]="2">Bizum</mat-radio-button>
-                <mat-radio-button [value]="3">Transferencia Bancaria</mat-radio-button>
-                <mat-radio-button [value]="4">Caja</mat-radio-button>
-              </mat-radio-group>
-              <p >"Cuenta CaixaBank : ES-90-2100-3421-54-2200159778"</p>
+<div class="container py-4 formulario-container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center">Solicitud de Afiliación</h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onRegistro()" name="registroForm" [formGroup]="registroForm">
+            <div class=" mb-3">
+              <label for="">Apellidos</label>
+              <input type="text" class="form-control" formControlName="apellidos" id="apellidos"
+                placeholder="Ingresa tus apellidos">
             </div>
-            
-            
+            <div class="row">
+              <div class=" mb-3 col-9 ">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control" formControlName="nombre" id="nombre"
+                  placeholder="Ingresa tu nombre">
+              </div>
+              <div class="col-3">
+                <label for="">Tipo de documentación</label>
+                <select formControlName="tipoDocumento" [(value)]="selectedTipoDocumento" class="form-select"
+                  aria-label="Default select example" placeholder="Tipo de Documento">
+                  <option *ngFor="let option of tiposDocumentaciones" [value]="option.id">{{ option.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class=" mb-3 row g-3">
+              <div class="col-8">
+                <label for="">Fecha de Nacimiento</label>
+                <div class="input-group date col-3" id="datepicker" data-target-input="nearest">
+                  <input type="date" class="form-control " data-target="#datepicker" formControlName="fechaNacimiento"
+                    placeholder="Selecciona tu fecha de nacimiento" />
+                </div>
+              </div>
 
-        </mat-card>
+              <div class="col-4">
+                <label for="">Número de documentación</label>
+                <input type="text" class="form-control" id="documentación" placeholder="Ingresa tu número"
+                  formControlName="documento">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="">Email</label>
+              <input type="email" class="form-control" formControlName="correo" id="email"
+                placeholder="Ingresa tu correo">
+            </div>
+            <div class="mb-3">
+              <label for="">Dirección</label>
+              <input type="text" class="form-control" formControlName="direccion" id="direccion"
+                placeholder="Ingresa tu dirección">
+            </div>
+            <div class="mb-3 row">
+              <div class="col-9">
+                <label for="">Teléfono</label>
+                <input type="text" class="form-control" formControlName="telefono" id="telefono"
+                  placeholder="Ingresa tu teléfono">
+              </div>
+              <div class="col-3">
+                <label for="">Codigo Postal</label>
+                <input type="text" class="form-control" formControlName="codigoPostal" id="codigoPostal"
+                  placeholder="Ingresa tu C.P">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <div class="col-6">
+                <label for="">Provincia</label>
+                <select formControlName="provincia" [(value)]="selectedProvincia" class="form-select"
+                  placeholder="Provincia"
+                  (change)="updateLocalidades()"><!-- (selectionChange)="updateLocalidades($event.value)" -->
+                  <option *ngFor="let option of provincias" [value]="option.id">{{ option.descripcion }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="">Localidad</label>
+                <select formControlName="localidad" [(value)]="selectedLocalidad" class="form-select"
+                  aria-label="Default select example" placeholder="Localidad">
+                  <option *ngFor="let option of filteredLocalidades" [value]="option.id">{{ option.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <div class="col-6">
+                <label for="">Deportes</label>
+                <select formControlName="deporte" [(value)]="selectedDeporte" class="form-select"
+                  aria-label="Default select example" placeholder="Deporte">
+                  <option *ngFor="let option of deportes" [value]="option.id">{{ option.nombre }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="">Función</label>
+                <select formControlName="afiliadosFuncion" [(value)]="selectedFuncion" class="form-select"
+                  aria-label="Default select example" placeholder="Tipo de Documento">
+                  <option *ngFor="let option of afiliadosFunciones" [value]="option.id">{{ option.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <div class="col-6">
+                <label for="">Categoría</label>
+
+                <select formControlName="afiliadosCategoria" [(value)]="selectedafiliadosCategoria" class="form-select"
+                  aria-label="Default select example" placeholder="Categoria">
+                  <option *ngFor="let option of categorias" [value]="option.id">{{ option.descripcion }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-6 center-text">
+                <label for="">Situación Actual:</label>
+                <div class="form-check col-3 center-text">
+                  <input class="form-check-input" type="radio" value="activo" formControlName="situacionActual"
+                    id="flexChecActivo">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Activo
+                  </label>
+                </div>
+                <div class="form-check col-3">
+                  <input class="form-check-input" type="radio" value="Ex" formControlName="situacionActual"
+                    id="flexCheckEx" checked>
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Ex
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3">
+              <div class="card-body text-center">
+                <p class="card-text">Deberás abonar 5 euros por afiliarte (correspondiente a insignia y tarjeta de
+                  afiliación) más una cuota anual de 20 euros.</p>
+                <!--<h5 class="card-title">Forma de pago</h5>-->
+                <div class="card mb-3">
+                  <div class="card-body text-center">
+                    <p class="card-text">Forma de Pago</p>
+                    <div class="form-check form-check-inline ">
+                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoTarjeta"
+                        formControlName="tipoPago" [(ngModel)]="selectedFormaPago" [value]="1">
+                      <label class="form-check-label" for="pagoTarjeta">
+                        Tarjeta de Crédito
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoBizum" formControlName="tipoPago"
+                        [(ngModel)]="selectedFormaPago" [value]="2">
+                      <label class="form-check-label" for="pagoBizum">
+                        Bizum
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoTransferencia"
+                        formControlName="tipoPago" [(ngModel)]="selectedFormaPago" [value]="3">
+                      <label class="form-check-label" for="pagoTransferencia">
+                        Transferencia Bancaria
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoCaja" formControlName="tipoPago"
+                        [(ngModel)]="selectedFormaPago" [value]="4">
+                      <label class="form-check-label" for="pagoCaja">
+                        Caja
+                      </label>
+                    </div>
+                    <p class="card-text font-weight-bold">Cuenta CaixaBank: ES-90-2100-3421-54-2200159778</p>
+                  </div>
+                </div>    
+                
+              </div>
+            </div>
+
+
+            <div class="mb-3 text-center">
+              <button type="submit" class="btn btn-primary">Registrarse</button>
+            </div>
+
+
+          </form>
+        </div>
       </div>
-      <button mat-flat-button color="primary" style="background-color: rgba(38, 24, 245, 0.795); margin-left: 50px;"
-        class="center-button-registrar">Registrar</button>
-
-    </form>
-  </mat-card-content>
-</mat-card>
-<ng-container *ngIf="mostrarFormulario">
-  <!-- Aquí se muestra el componente FormularioComponent -->
- <app-formulario *ngIf="mostrarFormulario" [usuario]="usuarioRegistrado"></app-formulario>
-</ng-container>
+    </div>
+  </div>
+</div>

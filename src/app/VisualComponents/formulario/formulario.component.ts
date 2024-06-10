@@ -96,9 +96,28 @@ export  class FormularioComponent implements OnInit{
   deportes: DeportesDto[] | undefined;
   selectedDeporte : any;
   selectedcolaboracion : boolean | undefined;
-  idiomasLista: string[] = ['Inglés','Alemán','Francés','Español','Italiano','Portugués','Neerlandés (Holandés)',
-                            'Polaco','Sueco','Danés','Griego','Checo','Rumano','Húngaro','Finlandés','Eslovaco',
-                            'Búlgaro','Croata','Esloveno','Lituano'];
+  idiomasLista: { id: number, descripcion: string }[] = [
+    { id: 1, descripcion: 'Inglés' },
+    { id: 2, descripcion: 'Alemán' },
+    { id: 3, descripcion: 'Francés' },
+    { id: 4, descripcion: 'Español' },
+    { id: 5, descripcion: 'Italiano' },
+    { id: 6, descripcion: 'Portugués' },
+    { id: 7, descripcion: 'Neerlandés (Holandés)' },
+    { id: 8, descripcion: 'Polaco' },
+    { id: 9, descripcion: 'Sueco' },
+    { id: 10, descripcion: 'Danés' },
+    { id: 11, descripcion: 'Griego' },
+    { id: 12, descripcion: 'Checo' },
+    { id: 13, descripcion: 'Rumano' },
+    { id: 14, descripcion: 'Húngaro' },
+    { id: 15, descripcion: 'Finlandés' },
+    { id: 16, descripcion: 'Eslovaco' },
+    { id: 17, descripcion: 'Búlgaro' },
+    { id: 18, descripcion: 'Croata' },
+    { id: 19, descripcion: 'Esloveno' },
+    { id: 20, descripcion: 'Lituano' }
+  ];
 
   constructor(private formBuilder: FormBuilder,private deportesService: DeporteServiceImpl,
     private cuestionarioService : CuestionarioServiceImpl,
@@ -140,7 +159,7 @@ export  class FormularioComponent implements OnInit{
     this.cargarDeportesComboBox();
     //Habilitación de ccomponent de colaboración
     this.formularioForm.get('colaborarAsociacion')?.valueChanges.subscribe(value => {
-      if (value === true) {
+      if (value === "true") {
         this.formularioForm.get('tipoColaboracion')?.enable(); // Habilita el campo
       } else {
         this.formularioForm.get('tipoColaboracion')?.disable(); // Deshabilita el campo
@@ -148,7 +167,7 @@ export  class FormularioComponent implements OnInit{
     });
     //Habilitación de ccomponent de dar clases
     this.formularioForm.get('selectedDarClases')?.valueChanges.subscribe(value => {
-      if (value === true) {
+      if (value === "true") {
         this.formularioForm.get('darClases')?.enable(); // Habilita el campo
       } else {
         this.formularioForm.get('darClases')?.disable(); // Deshabilita el campo

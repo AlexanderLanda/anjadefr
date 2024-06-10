@@ -42,6 +42,6 @@ export default class FailureComponent {
 
   closeModal() {
     console.info("valor tipo de pago",this.selectedFormaPago)
-    this.paymentService.pay(this.selectedFormaPago);
+   // this.paymentService.pay(this.selectedFormaPago);
   }
 }

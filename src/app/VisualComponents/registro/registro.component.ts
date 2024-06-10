@@ -60,7 +60,8 @@ import { OriginInterceptor } from '../../Core/OriginInterceptor';
         MatAutocompleteModule,
         MatRadioModule,
         RouterLink,
-        FormularioComponent
+        FormularioComponent,
+        
     ],providers: [
       {
         provide: HTTP_INTERCEPTORS,
@@ -71,6 +72,7 @@ import { OriginInterceptor } from '../../Core/OriginInterceptor';
 })
 export  class RegistroComponentComponent {
 
+  
   hide: boolean = true;
   registroForm: FormGroup;
   afiliadosFunciones: AfiliadosFuncionDto[] | undefined;
@@ -78,7 +80,11 @@ export  class RegistroComponentComponent {
   deportes: DeportesDto[] | undefined;
   categorias: AfiliadosCategoriasDto[] | undefined;
   provincias: ProvinciaDto[] | undefined;
-  tiposDocumentaciones: TipoDocumentoDto[] | undefined;
+  tiposDocumentaciones = [
+    { id: 1, descripcion: 'DNI' },
+    { id: 2, descripcion: 'NIE' },
+    { id: 3, descripcion: 'Pasaporte' }
+  ];
   localidades: LocalidadDto[] | undefined;
   federaciones: FederacionDto[] | undefined;
   filteredLocalidades  : LocalidadDto[] | undefined;
@@ -177,7 +183,7 @@ export  class RegistroComponentComponent {
       nombre: ['', [Validators.required]],
       documento: ['', [Validators.required]],
       fechaNacimiento: ['', [Validators.required]],
-      tipoDocumento: ['', [Validators.required]],
+      tipoDocumento: [this.tiposDocumentaciones[0].id],
       direccion: ['', [Validators.required]],
       codigoPostal: ['', [Validators.required, Validators.pattern('[0-9]*'), this.onlyNumbersValidator]],
       localidad: ['', [Validators.required]],
@@ -303,7 +309,7 @@ export  class RegistroComponentComponent {
       // Setteo de los datos de los oject foraneos de usuarios
       // Localidades
       if (typeof this.localidades !== 'undefined') {
-        const localidadObject = this.localidades.find(loc => loc.id === datosFormulario.localidad);
+        const localidadObject = this.localidades.find(loc => loc.id === Number(datosFormulario.localidad));
         console.info(localidadObject)
         if (localidadObject) {
           datosFormulario.localidad = localidadObject;
@@ -311,7 +317,7 @@ export  class RegistroComponentComponent {
       }
       // Provincias
       if (typeof this.provincias !== 'undefined') {
-        const provinciasObject = this.provincias.find(loc => loc.id === datosFormulario.provincia);
+        const provinciasObject = this.provincias.find(loc => loc.id === Number(datosFormulario.provincia));
         console.info(provinciasObject)
         if (provinciasObject) {
           datosFormulario.provincia = provinciasObject;
@@ -319,7 +325,7 @@ export  class RegistroComponentComponent {
       }
       // Deportes
       if (typeof this.deportes !== 'undefined') {
-        const deportesObject = this.deportes.find(loc => loc.id === datosFormulario.deporte);
+        const deportesObject = this.deportes.find(loc => loc.id === Number(datosFormulario.deporte));
         console.info(deportesObject)
         if (deportesObject) {
           datosFormulario.deporte = deportesObject;
@@ -335,7 +341,7 @@ export  class RegistroComponentComponent {
       }
       // AfiliacionFunciones
       if (typeof this.afiliadosFunciones !== 'undefined') {
-        const afiliadosFuncionObject = this.afiliadosFunciones.find(loc => loc.id === datosFormulario.afiliadosFuncion);
+        const afiliadosFuncionObject = this.afiliadosFunciones.find(loc => loc.id === Number(datosFormulario.afiliadosFuncion));
         console.info(afiliadosFuncionObject)
         if (afiliadosFuncionObject) {
           datosFormulario.afiliadosFuncion = afiliadosFuncionObject;
@@ -351,7 +357,7 @@ export  class RegistroComponentComponent {
       }
       // AfiliacionCategorias
       if (typeof this.categorias !== 'undefined') {
-        const categoriasFuncionObject = this.categorias.find(loc => loc.id === datosFormulario.afiliadosCategoria);
+        const categoriasFuncionObject = this.categorias.find(loc => loc.id === Number(datosFormulario.afiliadosCategoria));
         console.info(categoriasFuncionObject)
         if (categoriasFuncionObject) {
           datosFormulario.afiliadosCategoria = categoriasFuncionObject;
@@ -370,7 +376,7 @@ export  class RegistroComponentComponent {
 
       //asigancion de tipo de documento
       if (typeof this.tiposDocumentaciones !== 'undefined') {
-        const tipoDocumentoObject = this.tiposDocumentaciones.find(loc => loc.id === datosFormulario.tipoDocumento);
+        const tipoDocumentoObject = this.tiposDocumentaciones.find(loc => loc.id === Number(datosFormulario.tipoDocumento));
         console.info(tipoDocumentoObject)
         if (tipoDocumentoObject) {
           datosFormulario.tipoDocumento = tipoDocumentoObject;
@@ -387,7 +393,7 @@ export  class RegistroComponentComponent {
           this.usuariosService.setUsuario(response);
           if(datosFormulario.tipoPago.id===1||datosFormulario.tipoPago.id===2){
             //PAGO POR TARGETA DE CREDITO O BIZUM
-            this.paymentService.pay(datosFormulario.tipoPago.id);
+            this.paymentService.pay(datosFormulario.tipoPago.id,response.idAfiliacion);
           }
           else{
             this.mostrarFormulario = true;
@@ -419,8 +425,17 @@ export  class RegistroComponentComponent {
     return null;
   }
 
-  updateLocalidades(provinciaId: number) {
-    this.filteredLocalidades = this.localidades?.filter(localidad => localidad.idProvincia.id === provinciaId);
+  updateLocalidades() {
+    console.log("SELECCION PROVINCIA: ",this.registroForm.value.afiliadosCategoria)
+    //this.registroForm.value.localidad.id=this.registroForm.value.provincia.id
+    const provinciaId = Number(this.registroForm.value.provincia); // Convertir el valor a número
+    this.filteredLocalidades = this.localidades?.filter(loc => loc.id === provinciaId);
+        console.info("Localidad",this.filteredLocalidades)
+        /*
+    this.filteredLocalidades = this.localidades?.find(localidad => {
+      localidad.idProvincia.id === this.registroForm.value.provincia.id
+    });*/
+    
   }
 
   
