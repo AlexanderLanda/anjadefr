@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 import { AfiliadosFuncionDto } from '../../Core/Model/AfiliadosFuncionDto';
 import { AfiliadosFuncionServiceImpl } from '../../Core/Service/Implements/AfiliadosFuncionServiceImpl';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
@@ -21,15 +16,11 @@ import { ProvinciasServiceImpl } from '../../Core/Service/Implements/ProvinciasS
 import { LocalidadServiceImpl } from '../../Core/Service/Implements/LocalidadServiceImpl';
 import { AfiliadosCategoriasServiceImpl } from '../../Core/Service/Implements/AfiliadosCategoriasServiceImpl';
 import { UsuariosServiceImpl } from '../../Core/Service/Implements/UsuariosServiceImpl';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon';
 import { FederacionDto } from '../../Core/Model/FederacionDto';
 import { FederacionServiceImpl } from '../../Core/Service/Implements/FederacionServiceImpl';
 import { map, startWith } from 'rxjs/operators';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
-import { MatRadioModule } from '@angular/material/radio';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TipoDocumentoDto } from '../../Core/Model/TipoDocumentoDto';
 import { TipoDocumentacionServiceImpl } from '../../Core/Service/Implements/TipoDocumentacionServiceImpl';
 //import { FormularioComponent } from "../formulario/formulario.component";
@@ -47,18 +38,9 @@ import { OriginInterceptor } from '../../Core/OriginInterceptor';
     styleUrl: './registro.component.css',
     imports: [
         FormsModule,
-        MatCardModule,
-        MatButtonModule,
-        MatInputModule,
         CommonModule,
         ReactiveFormsModule,
-        MatOptionModule,
-        MatSelectModule,
         HttpClientModule,
-        MatDatepickerModule,
-        MatIconModule,
-        MatAutocompleteModule,
-        MatRadioModule,
         RouterLink,
         FormularioComponent,
         
@@ -110,62 +92,7 @@ export  class RegistroComponentComponent {
   selectedSituacionActual = '';
   activo = "Activo";
   ex = "Ex";
-  usuario = {
-    "id_user": 36,
-    "nombre": "ccc",
-    "apellidos": "Cuestionarios Pruebas",
-    "fechaNacimiento": "2024-05-09T22:00:00.000+00:00",
-    "direccion": "ccc",
-    "correo": "ccc@ccc.c",
-    "deporte": {
-      "id": 37,
-      "nombre": "Bádminton"
-    },
-    "localidad": {
-      "id": 3,
-      "descripcion": "Alicante",
-      "idProvincia": {
-        "id": 3,
-        "descripcion": "Alicante"
-      }
-    },
-    "documento": "ccc",
-    "codigoPostal": "12312",
-    "provincia": {
-      "id": 3,
-      "descripcion": "Alicante"
-    },
-    "telefono": "123123123",
-    "afiliadosFuncion": {
-      "id": 3,
-      "descripcion": "Juez(a) de mesa"
-    },
-    "afiliadosCategoria": {
-      "id": 2,
-      "descripcion": "Profesional"
-    },
-    "usuariorol": {
-      "id": 3,
-      "descripcion": "afiliados"
-    },
-    "estadoCuenta": {
-      "id": 3,
-      "estado": "pendiente de pago"
-    },
-    "observaciones": null,
-    "password": "",
-    "fechaAfiliacion": "2024-05-22T12:39:07.719+00:00",
-    "federacion": "",
-    "tipoPago": {
-      "id": 3,
-      "descripcion": "Transferencia Bancaria"
-    },
-    "tipoDocumento": {
-      "id": 1,
-      "descripcion": "DNI"
-    },
-    "situacionActual": "Ex"
-  };
+  
 
   constructor(private formBuilder: FormBuilder,private paymentService: PaymentService,
     private afiliadosFuncionService: AfiliadosFuncionServiceImpl,
@@ -177,7 +104,8 @@ export  class RegistroComponentComponent {
     private deportesService: DeporteServiceImpl,
     private federacionService: FederacionServiceImpl,
     private tipoDocumentacionService: TipoDocumentacionServiceImpl,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private router: Router) {
     this.registroForm = this.formBuilder.group({
       apellidos: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
@@ -397,6 +325,7 @@ export  class RegistroComponentComponent {
           }
           else{
             this.mostrarFormulario = true;
+            this.router.navigate(['/formulario']); 
           }
         },
         error => {

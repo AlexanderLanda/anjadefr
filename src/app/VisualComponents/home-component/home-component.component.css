@@ -83,5 +83,48 @@
   .content {
     height: 2000px; /* Solo para demostrar el efecto de scroll */
   }
-  
+  @media (max-width: 768px) {
+    .texto-carta {
+        font-size: 0.875rem; /* Tamaño de fuente más pequeño para móviles */
+    }
+
+    .titulo-cartas {
+        font-size: 1.25rem; /* Tamaño de fuente para los títulos en móviles */
+    }
+
+    .texto-carta-firma {
+        font-size: 0.875rem; /* Tamaño de fuente para las firmas en móviles */
+    }
+
+    #botonRegistro {
+        font-size: 1rem; /* Asegurar que el botón también se vea bien en móviles */
+    }
+
+    #descripcionSiglas h1 {
+        font-size: 1.25rem; /* Ajustar el tamaño del título principal en móviles */
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 769px) and (max-width: 992px) {
+    .texto-carta {
+        font-size: 1rem; /* Tamaño de fuente ajustado para tablets */
+    }
+
+    .titulo-cartas {
+        font-size: 1.5rem; /* Tamaño de fuente para los títulos en tablets */
+    }
+
+    .texto-carta-firma {
+        font-size: 1rem; /* Tamaño de fuente para las firmas en tablets */
+    }
+
+    #botonRegistro {
+        font-size: 1.125rem; /* Asegurar que el botón también se vea bien en tablets */
+    }
+
+    #descripcionSiglas h1 {
+        font-size: 1.5rem; /* Ajustar el tamaño del título principal en tablets */
+    }
+}
   

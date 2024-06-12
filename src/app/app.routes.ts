@@ -46,5 +46,9 @@ export const routes: Routes = [
     { 
         path: 'junta', 
         loadComponent: () => import('./VisualComponents/junta-directiva/junta-directiva.component').then((c) => c.JuntaDirectivaComponent),  
+    },
+    { 
+        path: 'noticias-anjade', 
+        loadComponent: () => import('./VisualComponents/noticias-anjade/noticias-anjade.component').then((c) => c.NoticiasAnjadeComponent),  
     }
 ];

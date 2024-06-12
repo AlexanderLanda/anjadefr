@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../Core/Service/Implements/AuthService';
@@ -14,9 +11,6 @@ import { AuthService } from '../../Core/Service/Implements/AuthService';
   standalone: true,
   imports: [
     FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
     CommonModule,
     ReactiveFormsModule
   ],
