@@ -1,0 +1,13 @@
+.navbar .dropdown-menu {
+    background-color: #343a40; /* Fondo oscuro */
+  }
+  
+  .navbar .dropdown-item {
+    color: #ffffff; /* Texto en blanco */
+  }
+  
+  .navbar .dropdown-item:hover,
+  .navbar .dropdown-item:focus {
+    background-color: #343a40; /* Mantener el fondo oscuro al pasar el mouse */
+    color: #ffffff; /* Mantener el texto en blanco al pasar el mouse */
+  }

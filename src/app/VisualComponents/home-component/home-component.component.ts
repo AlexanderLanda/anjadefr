@@ -1,18 +1,15 @@
 import { Component } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
 import { RouterLink, RouterModule } from '@angular/router';
-import RegistroComponentComponent from '../registro/registro.component';
-import { MatCardModule } from '@angular/material/card';
+import { JuntaDirectivaComponent } from "../junta-directiva/junta-directiva.component";
 
 @Component({
-  selector: 'app-home-component',
-  standalone: true,
-  imports: [MatButtonModule,RouterLink,MatCardModule,
-    MatButtonModule,],
-  templateUrl: './home-component.component.html',
-  styleUrl: './home-component.component.css'
+    selector: 'app-home-component',
+    standalone: true,
+    templateUrl: './home-component.component.html',
+    styleUrl: './home-component.component.css',
+    imports: [RouterLink, JuntaDirectivaComponent,JuntaDirectivaComponent]
 })
-export default class HomeComponentComponent {
+export  class HomeComponentComponent {
 
 
 }

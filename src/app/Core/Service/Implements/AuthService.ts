@@ -35,7 +35,7 @@ export class AuthService {
 
   isValidUser(user: any): boolean {
     const validRoles = ['presidente', 'comisionados', 'secretarias','administrador'];
-    return validRoles.includes(user.usuariorol.descripcion) && user.estadoCuenta.estado === 'activo';
+    return validRoles.includes(user.usuariorol.descripcion) && user.estadoCuenta.estado === 'Aprobado';
   }
 
   logout() {

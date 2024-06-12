@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule,
       FormularioComponent]
 })
-export default class SuccessComponent  implements OnInit{
+export  class SuccessComponent  implements OnInit{
 
   mostrarFormulario : boolean = true;
   

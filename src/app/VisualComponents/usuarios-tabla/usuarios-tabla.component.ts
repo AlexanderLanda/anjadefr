@@ -51,7 +51,7 @@ import { ModalEditarComponent } from '../modal-editar/modal-editar.component';
   templateUrl: './usuarios-tabla.component.html',
   styleUrl: './usuarios-tabla.component.css'
 })
-export default class UsuariosTablaComponent implements AfterViewInit {
+export  class UsuariosTablaComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['apellidos', 'nombre', 'funcion','estadoFuncion', 'categoria', 'deporte','provincia', 'estado','rolAfiliado','editar'];
   listadoUsuarios : UsuariosDto[] | undefined;
@@ -98,6 +98,7 @@ export default class UsuariosTablaComponent implements AfterViewInit {
     });
   }
 
+  
   filtrar(event : Event){
     const filtro = (event?.target as HTMLInputElement).value;
     console.log(event);
@@ -106,9 +107,9 @@ export default class UsuariosTablaComponent implements AfterViewInit {
 
   getEstadoCuentaClass(estado: number): string {
     if (estado === 3) {
-      return 'rojo'; // Si el estado es 1, devuelve la clase 'estado-rojo'
+      return 'bg-danger text-white'; // Si el estado es 1, devuelve la clase 'estado-rojo'
     } else if (estado === 4) {
-      return 'amarillo'; // Si el estado es 2, devuelve la clase 'estado-amarillo'
+      return 'bg-warning text-dark'; // Si el estado es 2, devuelve la clase 'estado-amarillo'
     } else {
       return ''; // Si el estado no es 1 ni 2, no se aplica ninguna clase adicional
     }

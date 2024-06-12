@@ -6,16 +6,18 @@ import { PaymentService } from '../../Core/Service/PaymentService';
 import { UsuariosServiceImpl } from '../../Core/Service/Implements/UsuariosServiceImpl';
 import { environment } from '../../../environments/environment';
 import { OriginRequest } from '../../Core/Service/Implements/OriginRequest';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-redsys',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './redsys.component.html',
   styleUrl: './redsys.component.css'
 })
-export default class RedsysComponent {
+export  class RedsysComponent {
 
+  selectedTipoDocumento="Tipo de Documento";
    usuario = {
   "id_user": 36,
   "nombre": "ccc",
@@ -77,7 +79,7 @@ export default class RedsysComponent {
 
   pay() {
     this.usuariosService.setUsuario(this.usuario);
-    this.paymentService.createPayment(2).subscribe(response => {
+    this.paymentService.createPayment(1,"A438887").subscribe(response => {
       const form = document.createElement('form');
       form.setAttribute('name', 'form');
       form.setAttribute('method', 'POST');

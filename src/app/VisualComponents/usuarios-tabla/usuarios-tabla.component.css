@@ -1,39 +1,38 @@
-.full-width {
-    width: 100%;
-    border-radius: 5px;
-  }
+/* Custom styles for estadoCuenta */
+.bg-danger {
+  background-color: #dc3545 !important;
+}
 
+.bg-warning {
+  background-color: #ffc107 !important;
+}
 
-  .leyenda {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-top: 15px;
-    border-radius: 5px;
-    padding-left: 15px;
-    
-  }
-  
-  .leyenda-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .cuadrado {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  
-  .rojo {
-    background-color: red;
-  }
-  
-  .amarillo {
-    background-color: yellow;
-    
-  }
-  #texto-pendiente{
-    padding-right: 10px;
-  }
+/* Custom styles for leyenda items */
+.leyenda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+}
+
+.cuadrado {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.cuadrado.rojo {
+  background-color: #dc3545;
+}
+
+.cuadrado.amarillo {
+  background-color: #ffc107;
+}
+
+#texto-pendiente {
+  margin-right: 15px;
+}

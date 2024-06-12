@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './estatutos.component.html',
   styleUrl: './estatutos.component.css'
 })
-export default class EstatutosComponent {
+export  class EstatutosComponent {
 
   constructor() {
     // Ruta del documento Word

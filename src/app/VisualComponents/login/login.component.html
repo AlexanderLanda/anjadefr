@@ -1,41 +1,32 @@
-<mat-card>
-  <mat-card-content>
-    <div class="header">
-      <p>Iniciar sesión en su cuenta</p>
-    </div>
-    <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
-      <div class="emailInput">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>ID Afiliación</mat-label>
-          <input
-            formControlName="idAfiliacion"
-            matInput
-            placeholder="Ingrese su ID de afiliación" required
-          />
-          <mat-error *ngIf="!loginForm.controls['idAfiliacion'].valid">
-            Se requiere ID de afiliación
-          </mat-error>
-        </mat-form-field>
+<div class="container-sm col-6 py-4 formulario-container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center">Iniciar sesión</h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm" class="text-center">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label">Número de Afiliación</label>
+                <input type="text" class="form-control" formControlName="idAfiliacion" id="idAfiliacion" placeholder="Ingresa tu número de afiliación">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" formControlName="password" id="password" placeholder="Ingresa tu password">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Acceder</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <span>
-          <a class="text-link" routerLink="/auth/forgot-password">¿Olvidaste la contraseña?</a>
-        </span>
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Contraseña</mat-label>
-          <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required />
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-            [attr.aria-pressed]="hide">
-          </button>
-          <mat-error *ngIf="!loginForm.controls['password'].valid">
-            Se requiere contraseña
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <button mat-flat-button color="primary" style="background-color: rgba(38, 24, 245, 0.795)" class="center-button-registrar">Iniciar sesión</button>
-    </form>
-    <div class="button-row">
-      <a href="/registro">Crear nueva cuenta</a>
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

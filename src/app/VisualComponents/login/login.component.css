@@ -1,3 +1,4 @@
+/*
 mat-card {
     max-width: 600px;
     margin: 2em auto;
@@ -40,5 +41,10 @@ mat-card {
     float: right;
     padding-right: 60px;
     text-decoration: none;
+  }*/
+  .formulario-container {
+    margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
   }
+  
+  
   
