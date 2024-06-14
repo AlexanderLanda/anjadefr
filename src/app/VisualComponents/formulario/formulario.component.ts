@@ -14,7 +14,11 @@ import { CuestionarioServiceImpl } from '../../Core/Service/Implements/Cuestiona
   imports: [ FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule,
   ],
   templateUrl: './formulario.component.html',
   styleUrl: './formulario.component.css'
