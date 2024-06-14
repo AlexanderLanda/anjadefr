@@ -7,3 +7,19 @@
     height: 225px;
     object-fit: cover; /* Asegura que la imagen cubra el área sin distorsión */
 }  
+.card-text {
+  font-size: 1rem;
+}
+@media (max-width: 576px) {
+  .card-text {
+      font-size: 0.9rem;
+  }
+  .mb-2 {
+      font-size: 1.2rem;
+  }
+  .fixed-size-image {
+      width: 100px;
+      height: 100px;
+      margin-right: 5px; 
+  }
+}

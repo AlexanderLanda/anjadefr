@@ -3,6 +3,8 @@ import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router
 import { AuthService } from '../../Core/Service/Implements/AuthService';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-menu-nav-bar',
@@ -10,7 +12,8 @@ import { FormsModule } from '@angular/forms';
   imports: [RouterOutlet,
     FormsModule,
     CommonModule,
-    RouterLink],
+    RouterLink,
+    NgbCollapseModule],
   templateUrl: './menu-nav-bar.component.html',
   styleUrl: './menu-nav-bar.component.css',
   
@@ -19,6 +22,7 @@ export class MenuNavBarComponent {
 
   title = 'anjadefr';
   isHomePage: boolean = false;
+  isNavbarCollapsed = true;
 
   constructor(private router: Router,private authService: AuthService) {}
   ngOnInit() {
@@ -35,6 +39,9 @@ export class MenuNavBarComponent {
     }
     const validRoles = ['presidente', 'comisionados', 'secretarias','administrador'];
     return validRoles.includes(user.usuariorol.descripcion) && user.estadoCuenta.estado === 'activo';
+  }
+  collapseNavbar() {
+    this.isNavbarCollapsed = true;
   }
   downloadEstatutos(){
     // Ruta del documento Word
