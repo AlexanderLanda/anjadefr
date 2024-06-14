@@ -1,25 +1,19 @@
 import { Component } from '@angular/core';
 import {AfterViewInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { UsuariosDto } from '../../Core/Model/UsuariosDto';
 import { UsuariosServiceImpl } from '../../Core/Service/Implements/UsuariosServiceImpl';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
-import { MatInputModule } from '@angular/material/input';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatCardModule } from '@angular/material/card';
 import { AfiliadosFuncionDto } from '../../Core/Model/AfiliadosFuncionDto';
 import { AfiliadosFuncionServiceImpl } from '../../Core/Service/Implements/AfiliadosFuncionServiceImpl';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
 import { ModalEditarComponent } from '../modal-editar/modal-editar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
 
 /**
  * @title Table with pagination
@@ -29,21 +23,14 @@ import { ModalEditarComponent } from '../modal-editar/modal-editar.component';
   selector: 'app-usuarios-tabla',
   standalone: true,
   imports: [
-    MatTableModule, 
     MatPaginatorModule,
     MatSortModule,
     FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
     CommonModule,
     ReactiveFormsModule,
-    MatOptionModule,
-    MatSelectModule,
     HttpClientModule,
-    MatDatepickerModule,
-    MatIconModule,
     ModalEditarComponent,
+    MatTableModule
     
     
      
@@ -60,7 +47,8 @@ export  class UsuariosTablaComponent implements AfterViewInit {
 
   selectedFuncion :number | undefined;
   afiliadosFunciones: AfiliadosFuncionDto[] | undefined;
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  @ViewChild(MatPaginator, { static: true })
+  paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort | null = null;
 
   constructor(
@@ -107,9 +95,9 @@ export  class UsuariosTablaComponent implements AfterViewInit {
 
   getEstadoCuentaClass(estado: number): string {
     if (estado === 3) {
-      return 'bg-danger text-white'; // Si el estado es 1, devuelve la clase 'estado-rojo'
+      return 'table-danger'; // Si el estado es 1, devuelve la clase 'estado-rojo'
     } else if (estado === 4) {
-      return 'bg-warning text-dark'; // Si el estado es 2, devuelve la clase 'estado-amarillo'
+      return 'table-warning'; // Si el estado es 2, devuelve la clase 'estado-amarillo'
     } else {
       return ''; // Si el estado no es 1 ni 2, no se aplica ninguna clase adicional
     }

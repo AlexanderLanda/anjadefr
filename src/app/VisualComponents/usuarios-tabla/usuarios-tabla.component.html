@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4 pt-5">
   <div class="card">
     <div class="card-body">
       <div class="mb-3">
@@ -28,17 +28,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let element of dataSource.filteredData" [ngClass]="getEstadoCuentaClass(element.estadoCuenta.id)">
+            <tr  *ngFor="let element of dataSource.filteredData.slice(
+              (dataSource.paginator?.pageIndex ?? 0) * (dataSource.paginator?.pageSize ?? 0),
+              ((dataSource.paginator?.pageIndex ?? 0) + 1) * (dataSource.paginator?.pageSize ?? 0)
+            )" [ngClass]="getEstadoCuentaClass(element.estadoCuenta.id)">
               <td>{{element.apellidos}}</td>
               <td>{{element.nombre}}</td>
               <td>{{element.afiliadosFuncion.descripcion}}</td>
-              <td>{{element.afiliadoCategoria.descripcion}}</td>
+              <td>{{element.afiliadosCategoria.descripcion}}</td>
               <td>{{element.situacionActual}}</td>
               
               <td>{{element.deporte.nombre}}</td>
               <td>{{element.provincia.descripcion}}</td>
               <td>{{element.estadoCuenta.estado}}</td>
-              <td>{{element.usuarioRol.descripcion}}</td>
+              <td>{{element.usuariorol.descripcion}}</td>
               <td>
                 <button class="btn btn-outline-primary btn-sm" (click)="editarFila(element)">
                   <i class="bi bi-pencil"></i>
@@ -49,21 +52,8 @@
         </table>
       </div>
       <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+
       </nav>
     </div>
   </div>

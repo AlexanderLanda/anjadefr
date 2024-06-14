@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosServiceImpl } from '../../Core/Service/Implements/UsuariosServiceImpl';
-import { FormularioComponent } from "../formulario/formulario.component";
-import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -10,8 +8,8 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     templateUrl: './success.component.html',
     styleUrl: './success.component.css',
-    imports: [CommonModule,
-      FormularioComponent]
+    imports: [
+      ]
 })
 export  class SuccessComponent  implements OnInit{
 
@@ -20,6 +18,7 @@ export  class SuccessComponent  implements OnInit{
   constructor(private usuarioService: UsuariosServiceImpl, private router: Router) {}
 
   ngOnInit() {
+    /*
     const usuario = this.usuarioService.getUsuario();
     if (usuario) {
       console.log(usuario);
@@ -28,7 +27,7 @@ export  class SuccessComponent  implements OnInit{
     } else {
       // Manejar el caso en que no haya datos de usuario (error o acceso directo a la URL de éxito)
       console.error('No se encontraron datos de usuario');
-    }
+    }*/
   }
 
   closeModal() {

@@ -22,62 +22,7 @@ import { CuestionarioServiceImpl } from '../../Core/Service/Implements/Cuestiona
 export  class FormularioComponent implements OnInit{
 
   @Input() usuario: UsuariosDto | undefined;
- /* usuario = {
-  "id_user": 36,
-  "nombre": "ccc",
-  "apellidos": "Cuestionarios Pruebas",
-  "fechaNacimiento": "2024-05-09T22:00:00.000+00:00",
-  "direccion": "ccc",
-  "correo": "ccc@ccc.c",
-  "deporte": {
-    "id": 37,
-    "nombre": "Bádminton"
-  },
-  "localidad": {
-    "id": 3,
-    "descripcion": "Alicante",
-    "idProvincia": {
-      "id": 3,
-      "descripcion": "Alicante"
-    }
-  },
-  "documento": "ccc",
-  "codigoPostal": "12312",
-  "provincia": {
-    "id": 3,
-    "descripcion": "Alicante"
-  },
-  "telefono": "123123123",
-  "afiliadosFuncion": {
-    "id": 3,
-    "descripcion": "Juez(a) de mesa"
-  },
-  "afiliadosCategoria": {
-    "id": 2,
-    "descripcion": "Profesional"
-  },
-  "usuariorol": {
-    "id": 3,
-    "descripcion": "afiliados"
-  },
-  "estadoCuenta": {
-    "id": 3,
-    "estado": "pendiente de pago"
-  },
-  "observaciones": null,
-  "password": "",
-  "fechaAfiliacion": "2024-05-22T12:39:07.719+00:00",
-  "federacion": "",
-  "tipoPago": {
-    "id": 3,
-    "descripcion": "Transferencia Bancaria"
-  },
-  "tipoDocumento": {
-    "id": 1,
-    "descripcion": "DNI"
-  },
-  "situacionActual": "Ex"
-};*/
+  isLoading = false;
   formularioForm: FormGroup;
   deportes: DeportesDto[] | undefined;
   selectedDeporte : any;
@@ -174,16 +119,19 @@ export  class FormularioComponent implements OnInit{
     })
   }
   onRegistrarFormulario() {
+    this.isLoading = true;
     const datosFormulario = this.formularioForm.value;
     datosFormulario.usuarioDto = this.usuario;
     console.info('Datos usuario de cuestionario:',datosFormulario.usuarioDto)
     console.info('Datos a registrar:',datosFormulario)
     this.cuestionarioService.saveOrUpdate(datosFormulario).subscribe(
       response => {
+        this.isLoading = false;
         console.log('Datos registrados con éxito:', response);
         // Aquí puedes agregar cualquier otra lógica después de enviar los datos
       },
       error => {
+        this.isLoading = false;
         console.error('Error al registrar los datos:', error);
         alert('Debe introducir su número de afiliación para poder enviar su cuestionario. Si no le encuetra, dirijase a su correo de bienvenida. Muchas Gracias');
         // Manejo de errores

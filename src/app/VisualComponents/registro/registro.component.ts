@@ -83,9 +83,9 @@ export  class RegistroComponentComponent {
   selectedUsuariorol = '';
   filteredDeportes :DeportesDto[] | undefined;
   afiliadosCategoria: FormControl<any> | undefined;
-;
+  isLoading = false;
+
   newDeporteName = '';
-  opciones: string[] = ['Alejandro', 'Alexander', 'Alejandra', 'Alicia', 'Alberto'];
   formaPagosList = [{"id":1,"descripcion":"Targeta de Crédito"},{"id":2,"descripcion":"Bizum"},{"id":3,"descripcion":"Transferencia Bancaria"},{"id":4,"descripcion":"Caja"}];
   filteredOptions: Observable<string[]> | undefined ;
   selectedFormaPago = '';
@@ -230,6 +230,7 @@ export  class RegistroComponentComponent {
   onRegistro() {
     if (!this.registroForm.valid) {
 
+      this.isLoading = true;
       this.registroForm.removeControl('confirmPassword');
       const datosFormulario = this.registroForm.value;
       // Llamar al servicio de la API para enviar los datos
@@ -322,13 +323,16 @@ export  class RegistroComponentComponent {
           if(datosFormulario.tipoPago.id===1||datosFormulario.tipoPago.id===2){
             //PAGO POR TARGETA DE CREDITO O BIZUM
             this.paymentService.pay(datosFormulario.tipoPago.id,response.idAfiliacion);
+            this.isLoading = false;
           }
           else{
             this.mostrarFormulario = true;
+            this.isLoading = false;
             this.router.navigate(['/formulario']); 
           }
         },
         error => {
+          this.isLoading = false;
           console.error('Error al registrar los datos:', error);
           alert('Debe completar todos los datos de caracter obligatorios(*)');
           // Manejo de errores

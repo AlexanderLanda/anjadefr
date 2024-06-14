@@ -26,8 +26,8 @@ export interface UsuariosDto {
     codigoPostal: string;
     provincia: ProvinciaDto;
     afiliadosFuncion: AfiliadosFuncionDto;
-    afiliadoCategoria: AfiliadosCategoriasDto;
-    usuarioRol: UsuariosRolDto;
+    afiliadosCategoria: AfiliadosCategoriasDto;
+    usuariorol: UsuariosRolDto;
     estadoCuenta: EstadosUsuariosDto;
     situacionActual: string;
     observaciones: string;
