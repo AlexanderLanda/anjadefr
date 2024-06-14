@@ -3,7 +3,6 @@ import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router
 import { AuthService } from '../../Core/Service/Implements/AuthService';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -13,7 +12,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     CommonModule,
     RouterLink,
-    NgbCollapseModule],
+    ],
   templateUrl: './menu-nav-bar.component.html',
   styleUrl: './menu-nav-bar.component.css',
   
