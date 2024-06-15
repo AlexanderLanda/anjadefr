@@ -46,7 +46,15 @@
             <div class="mb-3">
               <label for="">Email</label>
               <input type="email" class="form-control" formControlName="correo" id="email"
-                placeholder="Ingresa tu correo">
+                placeholder="Ingresa tu correo" (input)="onEmailChange()">
+              <div *ngIf="registroForm.get('correo')?.hasError('emailExists')">
+                <small class="error-message">El correo electrónico ya existe</small>
+              </div>
+              <div *ngIf="registroForm.get('correo')?.hasError('email') && registroForm.get('correo')?.touched">
+                <small class="error">Correo electrónico no válido</small>
+              </div>
+              
+              
             </div>
             <div class="mb-3">
               <label for="">Dirección</label>

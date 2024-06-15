@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { UsuariosRolDto } from '../../Model/UsuariosRolDto';
 import { UsuarioRolService } from '../UsuarioRolService';
@@ -10,13 +10,13 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class UsuariosServiceImpl implements UsuariosService {
-  apiUserUrl = environment.apiUrl+'api/v1/users';// URL del servicio en Spring Boot
+  apiUserUrl = environment.apiUrl + 'api/v1/users';// URL del servicio en Spring Boot
   private usuario: any;
 
 
   constructor(private http: HttpClient) { }
 
-  
+
 
   getUsuarios(): Observable<UsuariosDto[]> {
     return this.http.get<UsuariosDto[]>(this.apiUserUrl);
@@ -46,6 +46,11 @@ export class UsuariosServiceImpl implements UsuariosService {
 
   getUsuario() {
     return this.usuario;
+  }
+
+  validateEmail(email: string): Observable<boolean> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get<boolean>(`${this.apiUserUrl}/validate-email`, { params });
   }
 
 }
