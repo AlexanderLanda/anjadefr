@@ -7,6 +7,7 @@ import { UsuariosDto } from '../../Core/Model/UsuariosDto';
 import { DeporteServiceImpl } from '../../Core/Service/Implements/DeporteServiceImpl';
 import { DeportesDto } from '../../Core/Model/DeportesDto';
 import { CuestionarioServiceImpl } from '../../Core/Service/Implements/CuestionarioServiceImpl';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -55,7 +56,7 @@ export  class FormularioComponent implements OnInit{
   ];
 
   constructor(private formBuilder: FormBuilder,private deportesService: DeporteServiceImpl,
-    private cuestionarioService : CuestionarioServiceImpl,
+    private cuestionarioService : CuestionarioServiceImpl,private router: Router
   ){
     console.log('Datos del usuario:', this.usuario);
     this.formularioForm = this.formBuilder.group({
@@ -68,15 +69,15 @@ export  class FormularioComponent implements OnInit{
       deporte: ['', [Validators.required]],//dar opcion de dado un deporte elegido , seleccione la categoria y los años de participacion 
       anosActivoCategorias: ['', [Validators.required]],//dar opcion de dado un deporte elegido , seleccione la categoria y los años de participacion
       otrasActividades: ['', [Validators.required]],
-      colaborarAsociacion: ['Si', Validators.required],//buscar para guardar valor si o no 
+      colaborarAsociacion: ['true', Validators.required],//buscar para guardar valor si o no 
       tipoColaboracion: new FormControl({ value: '', disabled: true }, Validators.required),//a partir del valor elegido antes, dar opcion de entrar datos de que le gustaria colaborar
       comisionColaboracion: ['', [Validators.required]],//dar opocion de elegir comisiones en las que le gustaria colaborar
-      idiomas: [['Español'], Validators.required],//guardar listado de idiomas
+      idiomas: ['Español', Validators.required],//guardar listado de idiomas
       tiempoLibre: ['', [Validators.required]],//buscar para guardar valor si o no 
       desplazamiento: ['', [Validators.required]],//buscar para guardar valor si o no 
       delegacionColaboracion: ['', [Validators.required]],//buscar para guardar valor si o no y una descripcion de lo que quiere
       darClases: [{ value: '', disabled: true }, [Validators.required]],//buscar para guardar valor si o no y una descripcion de lo que quiere
-      selectedDarClases: ['No', [Validators.required]],//buscar para guardar valor si o no 
+      selectedDarClases: ['false', [Validators.required]],//buscar para guardar valor si o no 
       organizarEventosDeportivos: ['', [Validators.required]],//buscar para guardar valor si o no 
       reunionesAsociacion: ['', [Validators.required]],//buscar para guardar valor si o no 
       mediador: ['', [Validators.required]],//buscar para guardar valor si o no 
@@ -131,11 +132,14 @@ export  class FormularioComponent implements OnInit{
     this.cuestionarioService.saveOrUpdate(datosFormulario).subscribe(
       response => {
         this.isLoading = false;
+        console.log('Success!', response);
         console.log('Datos registrados con éxito:', response);
+        this.router.navigate(['/home']); 
         // Aquí puedes agregar cualquier otra lógica después de enviar los datos
       },
       error => {
         this.isLoading = false;
+        console.error('Error!', error);
         console.error('Error al registrar los datos:', error);
         alert('Debe introducir su número de afiliación para poder enviar su cuestionario. Si no le encuetra, dirijase a su correo de bienvenida. Muchas Gracias');
         // Manejo de errores
