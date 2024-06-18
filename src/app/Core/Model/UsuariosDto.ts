@@ -19,7 +19,7 @@ export interface UsuariosDto {
     telefono: string;
     federacion: string;
     deporte: DeportesDto;
-    localidad: LocalidadDto;
+    localidad: string;
     documento: string;
     tipoDocumento: TipoDocumentoDto;
     tipoPago: TipoPagoDto;

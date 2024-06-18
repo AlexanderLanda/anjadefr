@@ -44,7 +44,7 @@ HttpClientModule,
 })
 export  class UsuariosTablaComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['apellidos', 'nombre', 'funcion','estadoFuncion', 'categoria', 'deporte','provincia', 'estado','rolAfiliado','editar'];
+  displayedColumns: string[] = ['idAfiliacion','apellidos', 'nombre', 'funcion','estadoFuncion', 'categoria', 'deporte','provincia', 'estado','rolAfiliado','editar'];
   listadoUsuarios : UsuariosDto[] | undefined;
   listadoUsuariosFiltrados : UsuariosDto[] | undefined;
   dataSource = new MatTableDataSource<UsuariosDto>();

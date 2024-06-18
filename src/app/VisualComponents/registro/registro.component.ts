@@ -27,6 +27,9 @@ import { TipoDocumentacionServiceImpl } from '../../Core/Service/Implements/Tipo
 import { PaymentService } from '../../Core/Service/PaymentService';
 import { FormularioComponent } from "../formulario/formulario.component";
 import { OriginInterceptor } from '../../Core/OriginInterceptor';
+import { PROVINCIAS } from '../../constants/provinces';
+import { CATEGORIAS } from '../../constants/afiliadoscategoria';
+import { DEPORTES } from '../../constants/deportes';
 
 
 
@@ -63,9 +66,10 @@ export  class RegistroComponentComponent {
   registroForm: FormGroup;
   afiliadosFunciones: AfiliadosFuncionDto[] | undefined;
   usuariosRoles: UsuariosRolDto[] | undefined;
-  deportes: DeportesDto[] | undefined;
-  categorias: AfiliadosCategoriasDto[] | undefined;
-  provincias: ProvinciaDto[] | undefined;
+  deportes: DeportesDto[] = DEPORTES;
+  categorias: AfiliadosCategoriasDto[] = CATEGORIAS;
+  provincias: ProvinciaDto[] = PROVINCIAS;
+
   tiposDocumentaciones = [
     { id: 1, descripcion: 'DNI' },
     { id: 2, descripcion: 'NIE' },
@@ -238,9 +242,11 @@ camposLegibles: { [key: string]: string } = {
 
   cargarProvinciasComboBox() {
 
+    /*
     this.provinciasService.getProvincias().subscribe(provincias => {
       this.provincias = provincias;
-    })
+    })*/
+   
   }
 
   cargarTiposDocumentacionComboBox() {
@@ -251,10 +257,11 @@ camposLegibles: { [key: string]: string } = {
   }
 
   cargarLocalidadesComboBox() {
-
+/*
     this.localidadService.getLocalidades().subscribe(localidades => {
       this.localidades = localidades;
-    })
+    })*/
+   
   }
 
   cargarFederacionesComboBox() {
@@ -277,13 +284,14 @@ camposLegibles: { [key: string]: string } = {
       console.info(datosFormulario)
       // Setteo de los datos de los oject foraneos de usuarios
       // Localidades
+      /*
       if (typeof this.localidades !== 'undefined') {
         const localidadObject = this.localidades.find(loc => loc.id === Number(datosFormulario.localidad));
         console.info(localidadObject)
         if (localidadObject) {
           datosFormulario.localidad = localidadObject;
         }
-      }
+      }*/
       // Provincias
       if (typeof this.provincias !== 'undefined') {
         const provinciasObject = this.provincias.find(loc => loc.id === Number(datosFormulario.provincia));

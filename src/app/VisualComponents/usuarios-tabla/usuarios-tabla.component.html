@@ -15,6 +15,7 @@
         <table class="table table-striped table-hover">
           <thead>
             <tr>
+              <th scope="col">No. Afilición</th>
               <th scope="col">Apellidos</th>
               <th scope="col">Nombre</th>
               <th scope="col">Función</th>
@@ -32,6 +33,7 @@
               (dataSource.paginator?.pageIndex ?? 0) * (dataSource.paginator?.pageSize ?? 0),
               ((dataSource.paginator?.pageIndex ?? 0) + 1) * (dataSource.paginator?.pageSize ?? 0)
             )" [ngClass]="getEstadoCuentaClass(element.estadoCuenta.id)">
+              <td>{{element.idAfiliacion}}</td>
               <td>{{element.apellidos}}</td>
               <td>{{element.nombre}}</td>
               <td>{{element.afiliadosFuncion.descripcion}}</td>
