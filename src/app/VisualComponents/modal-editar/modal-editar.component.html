@@ -1,53 +1,38 @@
-<!-- registro.component.html -->
-<mat-card>
-    <mat-card-content *ngIf="!mostrarFormulario">
-      <div class="header">
-        <h1>Editar perfil de Afiliación </h1>
+<div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Editar perfil de Afiliación</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form (ngSubmit)="onRegistro()" [formGroup]="registroForm" class="modal-body">
+      <div class="form-group">
+        <label>Nombre: {{ data.fila.nombre }} {{ data.fila.apellidos }}</label>
       </div>
-      <form (ngSubmit)="onRegistro()" name="registroForm" [formGroup]="registroForm">
-  
-        <mat-card class="datos-fijos">
-            <mat-card-content >
-                <div class="nombre-apellidos">
-                    <h2>Nombre: {{ data.fila.nombre }} {{ data.fila.apellidos }}</h2>
-                </div>
-                <div class="categoria-rolUsuario">
-                    <mat-form-field class="select-width" appearance="outline">
-                      <mat-label>Roles</mat-label>
-                      <mat-select formControlName="usuariorol" [(value)]="selectedUsuariorol">
-                        <mat-option *ngFor="let option of usuariosRoles" [value]="option.id">{{ option.descripcion }}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="categoria-rolUsuario">
-                    <mat-form-field class="select-width" appearance="outline">
-                      <mat-label>Estado Cuenta</mat-label>
-                      <mat-select formControlName="estadoCuenta" [(value)]="selectedEstadoUsuario">
-                        <mat-option *ngFor="let option of estadosUsuariosList" [value]="option.id">{{ option.estado }}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                </div>
-
-                <div class="password-fields" *ngIf="showPasswordFields">
-                  <mat-form-field class="select-width" appearance="outline">
-                    <mat-label>Contraseña</mat-label>
-                    <input matInput formControlName="password" type="password">
-                  </mat-form-field>
-                  <mat-form-field class="select-width" appearance="outline">
-                    <mat-label>Confirmar Contraseña</mat-label>
-                    <input matInput formControlName="confirmPassword" type="password">
-                  </mat-form-field>
-                </div>
-                
-            </mat-card-content>
-        </mat-card>
-        <button mat-flat-button color="primary" style="background-color: rgba(38, 24, 245, 0.795); "
-          class="center-button-registrar">Guardar</button>
-  
-      </form>
-  
-      <div class="button-row">
-  
+      <div class="form-group">
+        <label for="usuariorol">Roles</label>
+        <select formControlName="usuariorol" class="form-control" id="usuariorol">
+          <option *ngFor="let option of usuariosRoles" [value]="option.id">{{ option.descripcion }}</option>
+        </select>
       </div>
-    </mat-card-content>
-  </mat-card>
+      <div class="form-group">
+        <label for="estadoCuenta">Estado Cuenta</label>
+        <select formControlName="estadoCuenta" class="form-control" id="estadoCuenta">
+          <option *ngFor="let option of estadosUsuariosList" [value]="option.id">{{ option.estado }}</option>
+        </select>
+      </div>
+      <div class="form-group" *ngIf="showPasswordFields">
+        <label for="password">Contraseña</label>
+        <input formControlName="password" type="password" class="form-control" id="password">
+      </div>
+      <div class="form-group" *ngIf="showPasswordFields">
+        <label for="confirmPassword">Confirmar Contraseña</label>
+        <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
+      </div>
+    </form>
+    <div class="modal-footer justify-content-center">
+      <button type="button" class="btn btn-primary" (click)="onRegistro()" [disabled]="!registroForm.valid">Guardar</button>
+    </div>
+  </div>
+</div>

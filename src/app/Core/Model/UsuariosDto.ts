@@ -19,15 +19,15 @@ export interface UsuariosDto {
     telefono: string;
     federacion: string;
     deporte: DeportesDto;
-    localidad: LocalidadDto;
+    localidad: string;
     documento: string;
     tipoDocumento: TipoDocumentoDto;
     tipoPago: TipoPagoDto;
     codigoPostal: string;
     provincia: ProvinciaDto;
     afiliadosFuncion: AfiliadosFuncionDto;
-    afiliadoCategoria: AfiliadosCategoriasDto;
-    usuarioRol: UsuariosRolDto;
+    afiliadosCategoria: AfiliadosCategoriasDto;
+    usuariorol: UsuariosRolDto;
     estadoCuenta: EstadosUsuariosDto;
     situacionActual: string;
     observaciones: string;

@@ -27,6 +27,9 @@ import { TipoDocumentacionServiceImpl } from '../../Core/Service/Implements/Tipo
 import { PaymentService } from '../../Core/Service/PaymentService';
 import { FormularioComponent } from "../formulario/formulario.component";
 import { OriginInterceptor } from '../../Core/OriginInterceptor';
+import { PROVINCIAS } from '../../constants/provinces';
+import { CATEGORIAS } from '../../constants/afiliadoscategoria';
+import { DEPORTES } from '../../constants/deportes';
 
 
 
@@ -40,7 +43,11 @@ import { OriginInterceptor } from '../../Core/OriginInterceptor';
         FormsModule,
         CommonModule,
         ReactiveFormsModule,
-        HttpClientModule,
+        
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule,
         RouterLink,
         FormularioComponent,
         
@@ -54,14 +61,15 @@ import { OriginInterceptor } from '../../Core/OriginInterceptor';
 })
 export  class RegistroComponentComponent {
 
-  
+  emailExists: boolean = false;
   hide: boolean = true;
   registroForm: FormGroup;
   afiliadosFunciones: AfiliadosFuncionDto[] | undefined;
   usuariosRoles: UsuariosRolDto[] | undefined;
-  deportes: DeportesDto[] | undefined;
-  categorias: AfiliadosCategoriasDto[] | undefined;
-  provincias: ProvinciaDto[] | undefined;
+  deportes: DeportesDto[] = DEPORTES;
+  categorias: AfiliadosCategoriasDto[] = CATEGORIAS;
+  provincias: ProvinciaDto[] = PROVINCIAS;
+
   tiposDocumentaciones = [
     { id: 1, descripcion: 'DNI' },
     { id: 2, descripcion: 'NIE' },
@@ -83,9 +91,9 @@ export  class RegistroComponentComponent {
   selectedUsuariorol = '';
   filteredDeportes :DeportesDto[] | undefined;
   afiliadosCategoria: FormControl<any> | undefined;
-;
+  isLoading = false;
+
   newDeporteName = '';
-  opciones: string[] = ['Alejandro', 'Alexander', 'Alejandra', 'Alicia', 'Alberto'];
   formaPagosList = [{"id":1,"descripcion":"Targeta de Crédito"},{"id":2,"descripcion":"Bizum"},{"id":3,"descripcion":"Transferencia Bancaria"},{"id":4,"descripcion":"Caja"}];
   filteredOptions: Observable<string[]> | undefined ;
   selectedFormaPago = '';
@@ -93,6 +101,26 @@ export  class RegistroComponentComponent {
   activo = "Activo";
   ex = "Ex";
   
+// Objeto de mapeo de claves técnicas a nombres legibles
+camposLegibles: { [key: string]: string } = {
+  apellidos: 'Apellidos',
+  nombre: 'Nombre',
+  documento: 'Número de Documentación',
+  fechaNacimiento: 'Fecha de Nacimiento',
+  tipoDocumento: 'Tipo de Documentación',
+  direccion: 'Dirección',
+  codigoPostal: 'Código Postal',
+  localidad: 'Localidad',
+  provincia: 'Provincia',
+  correo: 'Email',
+  telefono: 'Teléfono',
+  deporte: 'Deporte',
+  afiliadosFuncion: 'Función',
+  afiliadosCategoria: 'Categoría',
+  tipoPago: 'Forma de Pago',
+  situacionActual: 'Situación Actual'
+  // Agrega aquí los nombres legibles para los demás campos del formulario
+};
 
   constructor(private formBuilder: FormBuilder,private paymentService: PaymentService,
     private afiliadosFuncionService: AfiliadosFuncionServiceImpl,
@@ -121,10 +149,8 @@ export  class RegistroComponentComponent {
       deporte: ['', [Validators.required]],
       afiliadosFuncion: ['', [Validators.required]],
       afiliadosCategoria: ['', [Validators.required]],
-      federacion: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      usuariorol: ['', [Validators.required]],
       tipoPago: ['', [Validators.required]],
       situacionActual: ['', [Validators.required]],
     }, { validators: this.passwordMatchValidator });
@@ -150,6 +176,21 @@ export  class RegistroComponentComponent {
 
   }
 
+  onEmailChange() {
+    const email = this.registroForm.get('correo')?.value;
+    if (email) {
+      this.usuariosService.validateEmail(email).subscribe(
+        exists => {
+          this.emailExists = exists;
+          if (exists) {
+            this.registroForm.get('correo')?.setErrors({ emailExists: true });
+          } else {
+            this.registroForm.get('correo')?.setErrors(null);
+          }
+        }
+      );
+    }
+  }
   
   searchDeporte = (text: string) => {
     return this.deportes?.filter(deporte => deporte.nombre.toLowerCase().includes(text.toLowerCase()));
@@ -201,9 +242,11 @@ export  class RegistroComponentComponent {
 
   cargarProvinciasComboBox() {
 
+    /*
     this.provinciasService.getProvincias().subscribe(provincias => {
       this.provincias = provincias;
-    })
+    })*/
+   
   }
 
   cargarTiposDocumentacionComboBox() {
@@ -214,10 +257,11 @@ export  class RegistroComponentComponent {
   }
 
   cargarLocalidadesComboBox() {
-
+/*
     this.localidadService.getLocalidades().subscribe(localidades => {
       this.localidades = localidades;
-    })
+    })*/
+   
   }
 
   cargarFederacionesComboBox() {
@@ -228,21 +272,26 @@ export  class RegistroComponentComponent {
   }
 
   onRegistro() {
-    if (!this.registroForm.valid) {
+    this.registroForm.removeControl('confirmPassword');
+    this.registroForm.removeControl('password');
 
-      this.registroForm.removeControl('confirmPassword');
+    if (this.registroForm.valid&& this.emailExists !== true) {
+
+      this.isLoading = true;
+      
       const datosFormulario = this.registroForm.value;
       // Llamar al servicio de la API para enviar los datos
       console.info(datosFormulario)
       // Setteo de los datos de los oject foraneos de usuarios
       // Localidades
+      /*
       if (typeof this.localidades !== 'undefined') {
         const localidadObject = this.localidades.find(loc => loc.id === Number(datosFormulario.localidad));
         console.info(localidadObject)
         if (localidadObject) {
           datosFormulario.localidad = localidadObject;
         }
-      }
+      }*/
       // Provincias
       if (typeof this.provincias !== 'undefined') {
         const provinciasObject = this.provincias.find(loc => loc.id === Number(datosFormulario.provincia));
@@ -322,13 +371,16 @@ export  class RegistroComponentComponent {
           if(datosFormulario.tipoPago.id===1||datosFormulario.tipoPago.id===2){
             //PAGO POR TARGETA DE CREDITO O BIZUM
             this.paymentService.pay(datosFormulario.tipoPago.id,response.idAfiliacion);
+            this.isLoading = false;
           }
           else{
             this.mostrarFormulario = true;
+            this.isLoading = false;
             this.router.navigate(['/formulario']); 
           }
         },
         error => {
+          this.isLoading = false;
           console.error('Error al registrar los datos:', error);
           alert('Debe completar todos los datos de caracter obligatorios(*)');
           // Manejo de errores
@@ -336,9 +388,18 @@ export  class RegistroComponentComponent {
       );
     }
     else {
-      // El formulario no es válido, puedes mostrar un mensaje de error o realizar otra acción
-      console.error('Formulario no válido. Revise los campos.');
-      alert('Error');
+      // Identificar y mostrar el primer campo inválido
+      const campoInvalido = Object.keys(this.registroForm.controls).find(key => this.registroForm.get(key)?.invalid);
+      if (campoInvalido && this.camposLegibles[campoInvalido]) {
+        const nombreCampo = this.camposLegibles[campoInvalido];
+        console.error(`El ${nombreCampo} ya existe. Revise los campos.`);
+        alert(`Error: El ${nombreCampo} tiene error o esta vacio.`);
+      } else {
+        console.error('Formulario no válido o el correo ya existe. Revise los campos.');
+        alert('Error: El formulario no es válido o el correo ya existe.');
+      }
+      //console.error('Formulario no válido. Revise los campos.');
+      //alert('Tiene errores en los datos, revise cuidadosamente antes de registrarlos. Y asegurese de proporcionar todos los datos solicitados en el formulario.');
         
     }
   }

@@ -267,9 +267,14 @@
                 placeholder="Comente">
             </div>
             <div class="mb-3 text-center">
-              <button type="submit" class="btn btn-primary">Registrarse</button>
+              <button *ngIf="!isLoading" type="submit" class="btn btn-primary">Registrarse</button>
             </div>
           </form>
+          <div *ngIf="isLoading" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Cargando...</span>
+            </div>
+          </div>
         </div>
         
       </div>

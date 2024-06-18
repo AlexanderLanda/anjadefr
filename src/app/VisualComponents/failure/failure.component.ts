@@ -11,7 +11,11 @@ import { PaymentService } from '../../Core/Service/PaymentService';
   imports: [FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule,
     RouterLink],
   templateUrl: './failure.component.html',
   styleUrl: './failure.component.css'

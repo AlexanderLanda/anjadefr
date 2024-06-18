@@ -1,4 +1,5 @@
 <div class="container py-4 formulario-container">
+  
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
@@ -10,75 +11,81 @@
             <div class=" mb-3">
               <label for="">Apellidos</label>
               <input type="text" class="form-control" formControlName="apellidos" id="apellidos"
-                placeholder="Ingresa tus apellidos">
+                placeholder="Escribe tus apellidos">
             </div>
             <div class="row">
               <div class=" mb-3 col-9 ">
                 <label for="">Nombre</label>
                 <input type="text" class="form-control" formControlName="nombre" id="nombre"
-                  placeholder="Ingresa tu nombre">
+                  placeholder="Escribe tu nombre">
               </div>
               <div class="col-3">
-                <label for="">Tipo de documentación</label>
-                <select formControlName="tipoDocumento" [(value)]="selectedTipoDocumento" class="form-select"
-                  aria-label="Default select example" placeholder="Tipo de Documento">
-                  <option *ngFor="let option of tiposDocumentaciones" [value]="option.id">{{ option.descripcion }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class=" mb-3 row g-3">
-              <div class="col-8">
                 <label for="">Fecha de Nacimiento</label>
                 <div class="input-group date col-3" id="datepicker" data-target-input="nearest">
                   <input type="date" class="form-control " data-target="#datepicker" formControlName="fechaNacimiento"
                     placeholder="Selecciona tu fecha de nacimiento" />
                 </div>
               </div>
+            </div>
+            <div class=" mb-3 row g-3">
+              <div class="col-6">
+                <label for="">Tipo de documentación</label>
+                <select formControlName="tipoDocumento" [(value)]="selectedTipoDocumento" class="form-select"
+                  aria-label="Default select example" placeholder="Tipo de Documento">
+                  <option *ngFor="let option of tiposDocumentaciones" [value]="option.id">{{ option.descripcion }}
+                  </option>
+                </select>
+                
+              </div>
 
-              <div class="col-4">
+              <div class="col-6">
                 <label for="">Número de documentación</label>
-                <input type="text" class="form-control" id="documentación" placeholder="Ingresa tu número"
+                <input type="text" class="form-control" id="documentación" placeholder="Escribe tu número"
                   formControlName="documento">
               </div>
             </div>
             <div class="mb-3">
               <label for="">Email</label>
               <input type="email" class="form-control" formControlName="correo" id="email"
-                placeholder="Ingresa tu correo">
+                placeholder="Escribe tu correo" (input)="onEmailChange()">
+              <div *ngIf="registroForm.get('correo')?.hasError('emailExists')">
+                <small class="error-message">El correo electrónico ya existe</small>
+              </div>
+              <div *ngIf="registroForm.get('correo')?.hasError('email') && registroForm.get('correo')?.touched">
+                <small class="error">Correo electrónico no válido</small>
+              </div>
+              
+              
             </div>
             <div class="mb-3">
-              <label for="">Dirección</label>
-              <input type="text" class="form-control" formControlName="direccion" id="direccion"
-                placeholder="Ingresa tu dirección">
+              <label for="">Teléfono</label>
+                <input type="text" class="form-control" formControlName="telefono" id="telefono"
+                  placeholder="Escribe tu teléfono">
             </div>
             <div class="mb-3 row">
               <div class="col-9">
-                <label for="">Teléfono</label>
-                <input type="text" class="form-control" formControlName="telefono" id="telefono"
-                  placeholder="Ingresa tu teléfono">
+                <label for="">Dirección</label>
+              <input type="text" class="form-control" formControlName="direccion" id="direccion"
+                placeholder="Escribe tu dirección">
               </div>
               <div class="col-3">
                 <label for="">Codigo Postal</label>
                 <input type="text" class="form-control" formControlName="codigoPostal" id="codigoPostal"
-                  placeholder="Ingresa tu C.P">
+                  placeholder="Escribe tu C.P">
               </div>
             </div>
             <div class="mb-3 row">
               <div class="col-6">
+                <label for="">Población</label>
+                <input formControlName="localidad" [(value)]="selectedLocalidad" class="form-control"
+                  aria-label="Default select example" placeholder="Escribe tu población">
+              </div>
+              <div class="col-6">
                 <label for="">Provincia</label>
                 <select formControlName="provincia" [(value)]="selectedProvincia" class="form-select"
                   placeholder="Provincia"
-                  (change)="updateLocalidades()"><!-- (selectionChange)="updateLocalidades($event.value)" -->
+                  ><!-- (selectionChange)="updateLocalidades($event.value)" -->
                   <option *ngFor="let option of provincias" [value]="option.id">{{ option.descripcion }}
-                  </option>
-                </select>
-              </div>
-              <div class="col-6">
-                <label for="">Localidad</label>
-                <select formControlName="localidad" [(value)]="selectedLocalidad" class="form-select"
-                  aria-label="Default select example" placeholder="Localidad">
-                  <option *ngFor="let option of filteredLocalidades" [value]="option.id">{{ option.descripcion }}
                   </option>
                 </select>
               </div>
@@ -174,11 +181,16 @@
 
 
             <div class="mb-3 text-center">
-              <button type="submit" class="btn btn-primary">Registrarse</button>
+              <button *ngIf="!isLoading" type="submit" class="btn btn-primary">Registrarse</button>
             </div>
 
 
           </form>
+          <div *ngIf="isLoading" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Cargando...</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

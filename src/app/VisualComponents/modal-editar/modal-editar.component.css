@@ -1,6 +1,12 @@
-mat-card {
-    max-width: 600px;
-    margin: 2em auto;
-    text-align: center;
-    max-height: 1300px;
-  }
+.modal-dialog {
+  margin: auto;
+  z-index: 1050; /* Asegúrate de que el z-index sea lo suficientemente alto para estar por encima del contenido normal de la página */
+}
+
+.modal-content {
+  position: relative; /* Asegúrate de que el contenido de la modal no tenga un posicionamiento fijo o absoluto */
+}
+
+.modal-backdrop {
+  z-index: 1040; /* Asegúrate de que el z-index del fondo oscuro de la modal sea inferior al z-index de la modal misma */
+}

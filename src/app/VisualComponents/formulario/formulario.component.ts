@@ -7,6 +7,7 @@ import { UsuariosDto } from '../../Core/Model/UsuariosDto';
 import { DeporteServiceImpl } from '../../Core/Service/Implements/DeporteServiceImpl';
 import { DeportesDto } from '../../Core/Model/DeportesDto';
 import { CuestionarioServiceImpl } from '../../Core/Service/Implements/CuestionarioServiceImpl';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -14,7 +15,11 @@ import { CuestionarioServiceImpl } from '../../Core/Service/Implements/Cuestiona
   imports: [ FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule,
   ],
   templateUrl: './formulario.component.html',
   styleUrl: './formulario.component.css'
@@ -22,62 +27,7 @@ import { CuestionarioServiceImpl } from '../../Core/Service/Implements/Cuestiona
 export  class FormularioComponent implements OnInit{
 
   @Input() usuario: UsuariosDto | undefined;
- /* usuario = {
-  "id_user": 36,
-  "nombre": "ccc",
-  "apellidos": "Cuestionarios Pruebas",
-  "fechaNacimiento": "2024-05-09T22:00:00.000+00:00",
-  "direccion": "ccc",
-  "correo": "ccc@ccc.c",
-  "deporte": {
-    "id": 37,
-    "nombre": "Bádminton"
-  },
-  "localidad": {
-    "id": 3,
-    "descripcion": "Alicante",
-    "idProvincia": {
-      "id": 3,
-      "descripcion": "Alicante"
-    }
-  },
-  "documento": "ccc",
-  "codigoPostal": "12312",
-  "provincia": {
-    "id": 3,
-    "descripcion": "Alicante"
-  },
-  "telefono": "123123123",
-  "afiliadosFuncion": {
-    "id": 3,
-    "descripcion": "Juez(a) de mesa"
-  },
-  "afiliadosCategoria": {
-    "id": 2,
-    "descripcion": "Profesional"
-  },
-  "usuariorol": {
-    "id": 3,
-    "descripcion": "afiliados"
-  },
-  "estadoCuenta": {
-    "id": 3,
-    "estado": "pendiente de pago"
-  },
-  "observaciones": null,
-  "password": "",
-  "fechaAfiliacion": "2024-05-22T12:39:07.719+00:00",
-  "federacion": "",
-  "tipoPago": {
-    "id": 3,
-    "descripcion": "Transferencia Bancaria"
-  },
-  "tipoDocumento": {
-    "id": 1,
-    "descripcion": "DNI"
-  },
-  "situacionActual": "Ex"
-};*/
+  isLoading = false;
   formularioForm: FormGroup;
   deportes: DeportesDto[] | undefined;
   selectedDeporte : any;
@@ -106,7 +56,7 @@ export  class FormularioComponent implements OnInit{
   ];
 
   constructor(private formBuilder: FormBuilder,private deportesService: DeporteServiceImpl,
-    private cuestionarioService : CuestionarioServiceImpl,
+    private cuestionarioService : CuestionarioServiceImpl,private router: Router
   ){
     console.log('Datos del usuario:', this.usuario);
     this.formularioForm = this.formBuilder.group({
@@ -119,15 +69,15 @@ export  class FormularioComponent implements OnInit{
       deporte: ['', [Validators.required]],//dar opcion de dado un deporte elegido , seleccione la categoria y los años de participacion 
       anosActivoCategorias: ['', [Validators.required]],//dar opcion de dado un deporte elegido , seleccione la categoria y los años de participacion
       otrasActividades: ['', [Validators.required]],
-      colaborarAsociacion: ['Si', Validators.required],//buscar para guardar valor si o no 
+      colaborarAsociacion: ['true', Validators.required],//buscar para guardar valor si o no 
       tipoColaboracion: new FormControl({ value: '', disabled: true }, Validators.required),//a partir del valor elegido antes, dar opcion de entrar datos de que le gustaria colaborar
       comisionColaboracion: ['', [Validators.required]],//dar opocion de elegir comisiones en las que le gustaria colaborar
-      idiomas: [['Español'], Validators.required],//guardar listado de idiomas
+      idiomas: ['Español', Validators.required],//guardar listado de idiomas
       tiempoLibre: ['', [Validators.required]],//buscar para guardar valor si o no 
       desplazamiento: ['', [Validators.required]],//buscar para guardar valor si o no 
       delegacionColaboracion: ['', [Validators.required]],//buscar para guardar valor si o no y una descripcion de lo que quiere
       darClases: [{ value: '', disabled: true }, [Validators.required]],//buscar para guardar valor si o no y una descripcion de lo que quiere
-      selectedDarClases: ['No', [Validators.required]],//buscar para guardar valor si o no 
+      selectedDarClases: ['false', [Validators.required]],//buscar para guardar valor si o no 
       organizarEventosDeportivos: ['', [Validators.required]],//buscar para guardar valor si o no 
       reunionesAsociacion: ['', [Validators.required]],//buscar para guardar valor si o no 
       mediador: ['', [Validators.required]],//buscar para guardar valor si o no 
@@ -174,16 +124,22 @@ export  class FormularioComponent implements OnInit{
     })
   }
   onRegistrarFormulario() {
+    this.isLoading = true;
     const datosFormulario = this.formularioForm.value;
     datosFormulario.usuarioDto = this.usuario;
     console.info('Datos usuario de cuestionario:',datosFormulario.usuarioDto)
     console.info('Datos a registrar:',datosFormulario)
     this.cuestionarioService.saveOrUpdate(datosFormulario).subscribe(
       response => {
+        this.isLoading = false;
+        console.log('Success!', response);
         console.log('Datos registrados con éxito:', response);
+        this.router.navigate(['/home']); 
         // Aquí puedes agregar cualquier otra lógica después de enviar los datos
       },
       error => {
+        this.isLoading = false;
+        console.error('Error!', error);
         console.error('Error al registrar los datos:', error);
         alert('Debe introducir su número de afiliación para poder enviar su cuestionario. Si no le encuetra, dirijase a su correo de bienvenida. Muchas Gracias');
         // Manejo de errores
