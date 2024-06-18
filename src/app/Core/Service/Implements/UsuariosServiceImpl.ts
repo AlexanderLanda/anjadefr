@@ -53,6 +53,11 @@ export class UsuariosServiceImpl implements UsuariosService {
     return this.http.get<boolean>(`${this.apiUserUrl}/validate-email`, { params });
   }
 
+  validateIDAfiliacion(id: string): Observable<boolean> {
+    const params = new HttpParams().set('id', id);
+    return this.http.get<boolean>(`${this.apiUserUrl}/validate-idAfiliacion`, { params });
+  }
+
   checkNumeroAfiliacionExists(numeroAfiliacion: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiUserUrl}/checkNumeroAfiliacion/${numeroAfiliacion}`);
   }

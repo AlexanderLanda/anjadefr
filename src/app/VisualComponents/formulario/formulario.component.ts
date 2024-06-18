@@ -8,6 +8,8 @@ import { DeporteServiceImpl } from '../../Core/Service/Implements/DeporteService
 import { DeportesDto } from '../../Core/Model/DeportesDto';
 import { CuestionarioServiceImpl } from '../../Core/Service/Implements/CuestionarioServiceImpl';
 import { Router } from '@angular/router';
+import { DEPORTES } from '../../constants/deportes';
+import { UsuariosServiceImpl } from '../../Core/Service/Implements/UsuariosServiceImpl';
 
 @Component({
   selector: 'app-formulario',
@@ -27,9 +29,10 @@ HttpClientModule,
 export  class FormularioComponent implements OnInit{
 
   @Input() usuario: UsuariosDto | undefined;
+  idAfiliacionExists: boolean = false;
   isLoading = false;
   formularioForm: FormGroup;
-  deportes: DeportesDto[] | undefined;
+  deportes: DeportesDto[] = DEPORTES;
   selectedDeporte : any;
   selectedcolaboracion : boolean | undefined;
   idiomasLista: { id: number, descripcion: string }[] = [
@@ -56,7 +59,8 @@ export  class FormularioComponent implements OnInit{
   ];
 
   constructor(private formBuilder: FormBuilder,private deportesService: DeporteServiceImpl,
-    private cuestionarioService : CuestionarioServiceImpl,private router: Router
+    private cuestionarioService : CuestionarioServiceImpl,private usuariosService: UsuariosServiceImpl, 
+    private router: Router
   ){
     console.log('Datos del usuario:', this.usuario);
     this.formularioForm = this.formBuilder.group({
@@ -123,6 +127,25 @@ export  class FormularioComponent implements OnInit{
       this.deportes = deportes;
     })
   }
+
+  onIdAfiliacionChange() {
+    const idAfi = this.formularioForm.get('idAfiliacion')?.value;
+    if (idAfi) {
+      this.usuariosService.validateIDAfiliacion(idAfi).subscribe(
+        exists => {
+          this.idAfiliacionExists = exists;
+          if (exists) {
+
+            //this.formularioForm.get('idAfiliacion')?.setErrors({ idNotExists: true });
+          } else {
+            this.formularioForm.get('idAfiliacion')?.setErrors({ idNotExists: true });
+            //this.formularioForm.get('idAfiliacion')?.setErrors(null);
+          }
+        }
+      );
+    }
+  }
+
   onRegistrarFormulario() {
     this.isLoading = true;
     const datosFormulario = this.formularioForm.value;

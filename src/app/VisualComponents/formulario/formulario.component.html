@@ -14,7 +14,13 @@
               <div class=" mb-3 col-6 ">
                 <label>Número de Afiliación</label>
                 <input type="text" class="form-control col-3 text-center" formControlName="idAfiliacion"
-                  id="idAfiliacion" placeholder="Ingresa tu número de afiliación">
+                  id="idAfiliacion" placeholder="Ingresa tu número de afiliación" (input)="onIdAfiliacionChange()">
+                  <div *ngIf="formularioForm.get('idAfiliacion')?.hasError('idNotExists')">
+                    <small class="error-message">El ID de Afiliación no existe</small>
+                  </div>
+                  <div *ngIf="formularioForm.get('idAfiliacion')?.hasError('idExists') && formularioForm.get('idAfiliacion')?.touched">
+                    <small class="error">EL ID de Afiliación ya ha respondido el Cuestionario</small>
+                  </div>
               </div>
               <div class=" mb-3 col-6 ">
                 <label for="">Profesion Laboral</label>
@@ -22,6 +28,7 @@
                   placeholder="Ingresa tu profesión laboral">
               </div>
             </div>
+            <!--
             <div class="row">
               <div class="col-6">
                 <label for="">Deportes</label>
@@ -50,7 +57,7 @@
               </div>
               
             </div>
-
+-->
 
             <div class="mb-3  ">
               <label for="">Años en Activo y Categorías:</label>
