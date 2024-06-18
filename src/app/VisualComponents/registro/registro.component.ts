@@ -35,31 +35,31 @@ import { DEPORTES } from '../../constants/deportes';
 
 
 @Component({
-    selector: 'app-registro',
-    standalone: true,
-    templateUrl: './registro.component.html',
-    styleUrl: './registro.component.css',
-    imports: [
-        FormsModule,
-        CommonModule,
-        ReactiveFormsModule,
-        
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule,
-        RouterLink,
-        FormularioComponent,
-        
-    ],providers: [
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: OriginInterceptor,
-        multi: true,
-      },
-    ],
+  selector: 'app-registro',
+  standalone: true,
+  templateUrl: './registro.component.html',
+  styleUrl: './registro.component.css',
+  imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+
+    // TODO: `HttpClientModule` should not be imported into a component directly.
+    // Please refactor the code to add `provideHttpClient()` call to the provider list in the
+    // application bootstrap logic and remove the `HttpClientModule` import from this component.
+    HttpClientModule,
+    RouterLink,
+    FormularioComponent,
+
+  ], providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: OriginInterceptor,
+      multi: true,
+    },
+  ],
 })
-export  class RegistroComponentComponent {
+export class RegistroComponentComponent {
 
   emailExists: boolean = false;
   hide: boolean = true;
@@ -77,7 +77,7 @@ export  class RegistroComponentComponent {
   ];
   localidades: LocalidadDto[] | undefined;
   federaciones: FederacionDto[] | undefined;
-  filteredLocalidades  : LocalidadDto[] | undefined;
+  filteredLocalidades: LocalidadDto[] | undefined;
   filteredfederacionesList: Observable<FederacionDto[]> | undefined;
   selected = '';
   selectedafiliadosCategoria = '';
@@ -86,43 +86,43 @@ export  class RegistroComponentComponent {
   selectedProvincia = '';
   selectedDeporte = '';
   selectedFuncion = '';
-  usuarioRegistrado : UsuariosDto | undefined;
-  mostrarFormulario : boolean = false;
+  usuarioRegistrado: UsuariosDto | undefined;
+  mostrarFormulario: boolean = false;
   selectedUsuariorol = '';
-  filteredDeportes :DeportesDto[] | undefined;
+  filteredDeportes: DeportesDto[] | undefined;
   afiliadosCategoria: FormControl<any> | undefined;
   isLoading = false;
 
   newDeporteName = '';
-  formaPagosList = [{"id":1,"descripcion":"Targeta de Crédito"},{"id":2,"descripcion":"Bizum"},{"id":3,"descripcion":"Transferencia Bancaria"},{"id":4,"descripcion":"Caja"}];
-  filteredOptions: Observable<string[]> | undefined ;
+  formaPagosList = [{ "id": 1, "descripcion": "Targeta de Crédito" }, { "id": 2, "descripcion": "Bizum" }, { "id": 3, "descripcion": "Transferencia Bancaria" }, { "id": 4, "descripcion": "Caja" }];
+  filteredOptions: Observable<string[]> | undefined;
   selectedFormaPago = '';
   selectedSituacionActual = '';
   activo = "Activo";
   ex = "Ex";
-  
-// Objeto de mapeo de claves técnicas a nombres legibles
-camposLegibles: { [key: string]: string } = {
-  apellidos: 'Apellidos',
-  nombre: 'Nombre',
-  documento: 'Número de Documentación',
-  fechaNacimiento: 'Fecha de Nacimiento',
-  tipoDocumento: 'Tipo de Documentación',
-  direccion: 'Dirección',
-  codigoPostal: 'Código Postal',
-  localidad: 'Localidad',
-  provincia: 'Provincia',
-  correo: 'Email',
-  telefono: 'Teléfono',
-  deporte: 'Deporte',
-  afiliadosFuncion: 'Función',
-  afiliadosCategoria: 'Categoría',
-  tipoPago: 'Forma de Pago',
-  situacionActual: 'Situación Actual'
-  // Agrega aquí los nombres legibles para los demás campos del formulario
-};
 
-  constructor(private formBuilder: FormBuilder,private paymentService: PaymentService,
+  // Objeto de mapeo de claves técnicas a nombres legibles
+  camposLegibles: { [key: string]: string } = {
+    apellidos: 'Apellidos',
+    nombre: 'Nombre',
+    documento: 'Número de Documentación',
+    fechaNacimiento: 'Fecha de Nacimiento',
+    tipoDocumento: 'Tipo de Documentación',
+    direccion: 'Dirección',
+    codigoPostal: 'Código Postal',
+    localidad: 'Localidad',
+    provincia: 'Provincia',
+    correo: 'Email',
+    telefono: 'Teléfono',
+    deporte: 'Deporte',
+    afiliadosFuncion: 'Función',
+    afiliadosCategoria: 'Categoría',
+    tipoPago: 'Forma de Pago',
+    situacionActual: 'Situación Actual'
+    // Agrega aquí los nombres legibles para los demás campos del formulario
+  };
+
+  constructor(private formBuilder: FormBuilder, private paymentService: PaymentService,
     private afiliadosFuncionService: AfiliadosFuncionServiceImpl,
     private categoriasAfiiadosService: AfiliadosCategoriasServiceImpl,
     private usuariosRolService: UsuarioRolServiceImpl,
@@ -145,7 +145,7 @@ camposLegibles: { [key: string]: string } = {
       localidad: ['', [Validators.required]],
       provincia: ['', [Validators.required]],
       correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required,Validators.pattern('[0-9]*'), this.onlyNumbersValidator, Validators.maxLength(9), Validators.minLength(9)]],
+      telefono: ['', [Validators.required, Validators.pattern('[0-9]*'), this.onlyNumbersValidator, Validators.maxLength(9), Validators.minLength(9)]],
       deporte: ['', [Validators.required]],
       afiliadosFuncion: ['', [Validators.required]],
       afiliadosCategoria: ['', [Validators.required]],
@@ -172,7 +172,7 @@ camposLegibles: { [key: string]: string } = {
     this.cargarCategoriasDeAfiliadosComboBox();
     this.cargarFederacionesComboBox();
     this.cargarTiposDocumentacionComboBox();
-    this.filteredDeportes = this.deportes?.slice(); 
+
 
   }
 
@@ -191,7 +191,17 @@ camposLegibles: { [key: string]: string } = {
       );
     }
   }
-  
+  onDeporteInput(): void {
+    const inputValue = this.registroForm.get('deporte')?.value;
+    if (inputValue) {
+      this.filteredDeportes = this.deportes.filter(deporte =>
+        deporte.nombre.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    } else {
+      this.filteredDeportes = [];
+    }
+  }
+
   searchDeporte = (text: string) => {
     return this.deportes?.filter(deporte => deporte.nombre.toLowerCase().includes(text.toLowerCase()));
   }
@@ -246,7 +256,7 @@ camposLegibles: { [key: string]: string } = {
     this.provinciasService.getProvincias().subscribe(provincias => {
       this.provincias = provincias;
     })*/
-   
+
   }
 
   cargarTiposDocumentacionComboBox() {
@@ -257,11 +267,11 @@ camposLegibles: { [key: string]: string } = {
   }
 
   cargarLocalidadesComboBox() {
-/*
-    this.localidadService.getLocalidades().subscribe(localidades => {
-      this.localidades = localidades;
-    })*/
-   
+    /*
+        this.localidadService.getLocalidades().subscribe(localidades => {
+          this.localidades = localidades;
+        })*/
+
   }
 
   cargarFederacionesComboBox() {
@@ -275,10 +285,10 @@ camposLegibles: { [key: string]: string } = {
     this.registroForm.removeControl('confirmPassword');
     this.registroForm.removeControl('password');
 
-    if (this.registroForm.valid&& this.emailExists !== true) {
+    if (this.registroForm.valid && this.emailExists !== true) {
 
       this.isLoading = true;
-      
+
       const datosFormulario = this.registroForm.value;
       // Llamar al servicio de la API para enviar los datos
       console.info(datosFormulario)
@@ -302,171 +312,188 @@ camposLegibles: { [key: string]: string } = {
       }
       // Deportes
       if (typeof this.deportes !== 'undefined') {
-        const deportesObject = this.deportes.find(loc => loc.id === Number(datosFormulario.deporte));
+        this.deportesService.getDeportes().subscribe(deportes => {
+          this.deportes = deportes;
+        })
+        const deportesObject = this.deportes.find(loc => loc.nombre === datosFormulario.deporte);
         console.info(deportesObject)
         if (deportesObject) {
           datosFormulario.deporte = deportesObject;
         }
-      }
-      //tipo de Documentacion
-      if (typeof this.tiposDocumentaciones !== 'undefined') {
-        const tipoDocumentacionObject = this.tiposDocumentaciones.find(loc => loc.id === datosFormulario.tipoDocumento);
-        console.info(tipoDocumentacionObject)
-        if (tipoDocumentacionObject) {
-          datosFormulario.tipoDocumento = tipoDocumentacionObject;
+        else {
+          var deporteDto: DeportesDto = {
+            id: 0, // Aquí inicializas el id como null o como desees
+            nombre: datosFormulario.deporte
+          };
+          datosFormulario.deporte = deporteDto;
+          
         }
-      }
-      // AfiliacionFunciones
-      if (typeof this.afiliadosFunciones !== 'undefined') {
-        const afiliadosFuncionObject = this.afiliadosFunciones.find(loc => loc.id === Number(datosFormulario.afiliadosFuncion));
-        console.info(afiliadosFuncionObject)
-        if (afiliadosFuncionObject) {
-          datosFormulario.afiliadosFuncion = afiliadosFuncionObject;
-        }
-      }
-      // forma pago
-      if (typeof this.formaPagosList !== 'undefined') {
-        const formaPagoObject = this.formaPagosList.find(loc => loc.id === datosFormulario.tipoPago);
-        console.info(formaPagoObject)
-        if (formaPagoObject) {
-          datosFormulario.tipoPago = formaPagoObject;
-        }
-      }
-      // AfiliacionCategorias
-      if (typeof this.categorias !== 'undefined') {
-        const categoriasFuncionObject = this.categorias.find(loc => loc.id === Number(datosFormulario.afiliadosCategoria));
-        console.info(categoriasFuncionObject)
-        if (categoriasFuncionObject) {
-          datosFormulario.afiliadosCategoria = categoriasFuncionObject;
-        }
-      }
-      //Asignacion por defecto de rol de Afiiado
-      datosFormulario.usuariorol = { id: "3", descripcion: "afiliados" };
-      //asigancion de tipo de pago
-      if (typeof this.formaPagosList !== 'undefined') {
-        const tipoPagoObject = this.formaPagosList.find(loc => loc.id === datosFormulario.tipoPago);
-        console.info(tipoPagoObject)
-        if (tipoPagoObject) {
-          datosFormulario.tipoPago = tipoPagoObject;
-        }
-      }
 
-      //asigancion de tipo de documento
-      if (typeof this.tiposDocumentaciones !== 'undefined') {
-        const tipoDocumentoObject = this.tiposDocumentaciones.find(loc => loc.id === Number(datosFormulario.tipoDocumento));
-        console.info(tipoDocumentoObject)
-        if (tipoDocumentoObject) {
-          datosFormulario.tipoDocumento = tipoDocumentoObject;
-        }
-      }
-
-
-      console.info(datosFormulario)
-      this.usuariosService.saveOrUpdate(datosFormulario).subscribe(
-        response => {
-          console.log('Datos registrados con éxito:', response);
-          // Aquí puedes agregar cualquier otra lógica después de enviar los datos
-          this.usuarioRegistrado = response;
-          this.usuariosService.setUsuario(response);
-          if(datosFormulario.tipoPago.id===1||datosFormulario.tipoPago.id===2){
-            //PAGO POR TARGETA DE CREDITO O BIZUM
-            this.paymentService.pay(datosFormulario.tipoPago.id,response.idAfiliacion);
-            this.isLoading = false;
+        //tipo de Documentacion
+        if (typeof this.tiposDocumentaciones !== 'undefined') {
+          const tipoDocumentacionObject = this.tiposDocumentaciones.find(loc => loc.id === datosFormulario.tipoDocumento);
+          console.info(tipoDocumentacionObject)
+          if (tipoDocumentacionObject) {
+            datosFormulario.tipoDocumento = tipoDocumentacionObject;
           }
-          else{
-            this.mostrarFormulario = true;
-            this.isLoading = false;
-            this.router.navigate(['/formulario']); 
-          }
-        },
-        error => {
-          this.isLoading = false;
-          console.error('Error al registrar los datos:', error);
-          alert('Debe completar todos los datos de caracter obligatorios(*)');
-          // Manejo de errores
         }
-      );
+        // AfiliacionFunciones
+        if (typeof this.afiliadosFunciones !== 'undefined') {
+          const afiliadosFuncionObject = this.afiliadosFunciones.find(loc => loc.id === Number(datosFormulario.afiliadosFuncion));
+          console.info(afiliadosFuncionObject)
+          if (afiliadosFuncionObject) {
+            datosFormulario.afiliadosFuncion = afiliadosFuncionObject;
+          }
+        }
+        // forma pago
+        if (typeof this.formaPagosList !== 'undefined') {
+          const formaPagoObject = this.formaPagosList.find(loc => loc.id === datosFormulario.tipoPago);
+          console.info(formaPagoObject)
+          if (formaPagoObject) {
+            datosFormulario.tipoPago = formaPagoObject;
+          }
+        }
+        // AfiliacionCategorias
+        if (typeof this.categorias !== 'undefined') {
+          const categoriasFuncionObject = this.categorias.find(loc => loc.id === Number(datosFormulario.afiliadosCategoria));
+          console.info(categoriasFuncionObject)
+          if (categoriasFuncionObject) {
+            datosFormulario.afiliadosCategoria = categoriasFuncionObject;
+          }
+        }
+        //Asignacion por defecto de rol de Afiiado
+        datosFormulario.usuariorol = { id: "3", descripcion: "afiliados" };
+        //asigancion de tipo de pago
+        if (typeof this.formaPagosList !== 'undefined') {
+          const tipoPagoObject = this.formaPagosList.find(loc => loc.id === datosFormulario.tipoPago);
+          console.info(tipoPagoObject)
+          if (tipoPagoObject) {
+            datosFormulario.tipoPago = tipoPagoObject;
+          }
+        }
+
+        //asigancion de tipo de documento
+        if (typeof this.tiposDocumentaciones !== 'undefined') {
+          const tipoDocumentoObject = this.tiposDocumentaciones.find(loc => loc.id === Number(datosFormulario.tipoDocumento));
+          console.info(tipoDocumentoObject)
+          if (tipoDocumentoObject) {
+            datosFormulario.tipoDocumento = tipoDocumentoObject;
+          }
+        }
+
+
+        console.info(datosFormulario)
+        this.usuariosService.saveOrUpdate(datosFormulario).subscribe(
+          response => {
+            console.log('Datos registrados con éxito:', response);
+            // Aquí puedes agregar cualquier otra lógica después de enviar los datos
+            this.usuarioRegistrado = response;
+            this.usuariosService.setUsuario(response);
+            if (datosFormulario.tipoPago.id === 1 || datosFormulario.tipoPago.id === 2) {
+              //PAGO POR TARGETA DE CREDITO O BIZUM
+              this.paymentService.pay(datosFormulario.tipoPago.id, response.idAfiliacion);
+              this.isLoading = false;
+            }
+            else {
+              this.mostrarFormulario = true;
+              this.isLoading = false;
+              this.router.navigate(['/formulario']);
+            }
+          },
+          error => {
+            this.isLoading = false;
+            console.error('Error al registrar los datos:', error);
+            alert('Debe completar todos los datos de caracter obligatorios(*)');
+            // Manejo de errores
+          }
+        );
+      }
+      else {
+        // Identificar y mostrar el primer campo inválido
+        const campoInvalido = Object.keys(this.registroForm.controls).find(key => this.registroForm.get(key)?.invalid);
+        if (campoInvalido && this.camposLegibles[campoInvalido]) {
+          const nombreCampo = this.camposLegibles[campoInvalido];
+          console.error(`El ${nombreCampo} ya existe. Revise los campos.`);
+          alert(`Error: El ${nombreCampo} tiene error o esta vacio.`);
+        } else {
+          console.error('Formulario no válido o el correo ya existe. Revise los campos.');
+          alert('Error: El formulario no es válido o el correo ya existe.');
+        }
+        //console.error('Formulario no válido. Revise los campos.');
+        //alert('Tiene errores en los datos, revise cuidadosamente antes de registrarlos. Y asegurese de proporcionar todos los datos solicitados en el formulario.');
+
+      }
     }
-    else {
-      // Identificar y mostrar el primer campo inválido
-      const campoInvalido = Object.keys(this.registroForm.controls).find(key => this.registroForm.get(key)?.invalid);
-      if (campoInvalido && this.camposLegibles[campoInvalido]) {
-        const nombreCampo = this.camposLegibles[campoInvalido];
-        console.error(`El ${nombreCampo} ya existe. Revise los campos.`);
-        alert(`Error: El ${nombreCampo} tiene error o esta vacio.`);
+  }
+
+
+
+    onlyNumbersValidator(control: AbstractControl): { [key: string]: any } | null {
+      const inputValue: string = control.value;
+      if (!/^\d+$/.test(inputValue)) {
+        return { 'onlyNumbers': true };
+      }
+      return null;
+    }
+
+    updateLocalidades() {
+      console.log("SELECCION PROVINCIA: ", this.registroForm.value.afiliadosCategoria)
+      //this.registroForm.value.localidad.id=this.registroForm.value.provincia.id
+      const provinciaId = Number(this.registroForm.value.provincia); // Convertir el valor a número
+      this.filteredLocalidades = this.localidades?.filter(loc => loc.id === provinciaId);
+      console.info("Localidad", this.filteredLocalidades)
+      /*
+  this.filteredLocalidades = this.localidades?.find(localidad => {
+    localidad.idProvincia.id === this.registroForm.value.provincia.id
+  });*/
+
+    }
+
+    seleccionarDeporte(deporte: DeportesDto) {
+      this.registroForm.get("deporte")?.setValue(deporte.nombre);
+      this.filteredDeportes = [];
+    }
+
+    filterDeportes(event : Event){
+      this.filteredDeportes = this.deportes?.slice();
+      const filtro = (event?.target as HTMLInputElement).value;
+      if (filtro) {
+        const filterValue = filtro.toLowerCase();
+        this.filteredDeportes = this.deportes?.filter(option => option.nombre.toLowerCase().includes(filterValue));
+        this.filterDeportes.length
       } else {
-        console.error('Formulario no válido o el correo ya existe. Revise los campos.');
-        alert('Error: El formulario no es válido o el correo ya existe.');
+        this.filteredDeportes = this.deportes?.slice(); // Si no hay valor, muestra todos los deportes
       }
-      //console.error('Formulario no válido. Revise los campos.');
-      //alert('Tiene errores en los datos, revise cuidadosamente antes de registrarlos. Y asegurese de proporcionar todos los datos solicitados en el formulario.');
-        
     }
-  }
 
+    realizarPago() {
+      const datosPago = {
+        Ds_Merchant_MerchantCode: '363273228',
+        Ds_Merchant_Terminal: '1',
+        Ds_Merchant_Currency: '978',
+        Ds_Merchant_Amount: '1000', // Monto del pago en céntimos (en este caso 10 euros)
+        Ds_Merchant_Order: this.generarNumeroPedido()
+      };
 
-  
-
-  onlyNumbersValidator(control: AbstractControl): { [key: string]: any } | null {
-    const inputValue: string = control.value;
-    if (!/^\d+$/.test(inputValue)) {
-      return { 'onlyNumbers': true };
+      // Enviar los datos al servidor para procesar el pago
+      this.http.post<string>('http://localhost:8080/procesar_pago', datosPago)
+        .subscribe(
+          (redirectUrl) => {
+            // Redirigir al formulario de pago de Redsys
+            window.location.href = redirectUrl;
+          },
+          (error) => {
+            console.error('Error al procesar el pago:', error);
+          }
+        );
     }
-    return null;
-  }
 
-  updateLocalidades() {
-    console.log("SELECCION PROVINCIA: ",this.registroForm.value.afiliadosCategoria)
-    //this.registroForm.value.localidad.id=this.registroForm.value.provincia.id
-    const provinciaId = Number(this.registroForm.value.provincia); // Convertir el valor a número
-    this.filteredLocalidades = this.localidades?.filter(loc => loc.id === provinciaId);
-        console.info("Localidad",this.filteredLocalidades)
-        /*
-    this.filteredLocalidades = this.localidades?.find(localidad => {
-      localidad.idProvincia.id === this.registroForm.value.provincia.id
-    });*/
-    
-  }
-
-  
-
-  filterDeportes(value: string) {
-    if (value) {
-      const filterValue = value.toLowerCase();
-      this.filteredDeportes = this.deportes?.filter(option => option.nombre.toLowerCase().includes(filterValue));
-    } else {
-      this.filteredDeportes = this.deportes?.slice(); // Si no hay valor, muestra todos los deportes
+    generarNumeroPedido(): string {
+      // Generar un número de pedido único
+      return 'PEDIDO_' + Math.random().toString(36).substr(2, 9);
     }
+
   }
-
-  realizarPago() {
-    const datosPago = {
-      Ds_Merchant_MerchantCode: '363273228',
-      Ds_Merchant_Terminal: '1',
-      Ds_Merchant_Currency: '978',
-      Ds_Merchant_Amount: '1000', // Monto del pago en céntimos (en este caso 10 euros)
-      Ds_Merchant_Order: this.generarNumeroPedido()
-    };
-
-    // Enviar los datos al servidor para procesar el pago
-    this.http.post<string>('http://localhost:8080/procesar_pago', datosPago)
-      .subscribe(
-        (redirectUrl) => {
-          // Redirigir al formulario de pago de Redsys
-          window.location.href = redirectUrl;
-        },
-        (error) => {
-          console.error('Error al procesar el pago:', error);
-        }
-      );
-  }
-
-  generarNumeroPedido(): string {
-    // Generar un número de pedido único
-    return 'PEDIDO_' + Math.random().toString(36).substr(2, 9);
-  }
-
-}
 
 
 

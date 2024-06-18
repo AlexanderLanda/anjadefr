@@ -1,5 +1,5 @@
 <div class="container py-4 formulario-container">
-  
+
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
@@ -35,7 +35,7 @@
                   <option *ngFor="let option of tiposDocumentaciones" [value]="option.id">{{ option.descripcion }}
                   </option>
                 </select>
-                
+
               </div>
 
               <div class="col-6">
@@ -54,19 +54,19 @@
               <div *ngIf="registroForm.get('correo')?.hasError('email') && registroForm.get('correo')?.touched">
                 <small class="error">Correo electrónico no válido</small>
               </div>
-              
-              
+
+
             </div>
             <div class="mb-3">
               <label for="">Teléfono</label>
-                <input type="text" class="form-control" formControlName="telefono" id="telefono"
-                  placeholder="Escribe tu teléfono">
+              <input type="text" class="form-control" formControlName="telefono" id="telefono"
+                placeholder="Escribe tu teléfono">
             </div>
             <div class="mb-3 row">
               <div class="col-9">
                 <label for="">Dirección</label>
-              <input type="text" class="form-control" formControlName="direccion" id="direccion"
-                placeholder="Escribe tu dirección">
+                <input type="text" class="form-control" formControlName="direccion" id="direccion"
+                  placeholder="Escribe tu dirección">
               </div>
               <div class="col-3">
                 <label for="">Codigo Postal</label>
@@ -83,8 +83,7 @@
               <div class="col-6">
                 <label for="">Provincia</label>
                 <select formControlName="provincia" [(value)]="selectedProvincia" class="form-select"
-                  placeholder="Provincia"
-                  ><!-- (selectionChange)="updateLocalidades($event.value)" -->
+                  placeholder="Provincia"><!-- (selectionChange)="updateLocalidades($event.value)" -->
                   <option *ngFor="let option of provincias" [value]="option.id">{{ option.descripcion }}
                   </option>
                 </select>
@@ -92,12 +91,14 @@
             </div>
             <div class="mb-3 row">
               <div class="col-6">
-                <label for="">Deportes</label>
-                <select formControlName="deporte" [(value)]="selectedDeporte" class="form-select"
-                  aria-label="Default select example" placeholder="Deporte">
-                  <option *ngFor="let option of deportes" [value]="option.id">{{ option.nombre }}
-                  </option>
-                </select>
+                <label for="">Deporte</label>
+                <input type="text" id="deporte" class="form-control" formControlName="deporte"
+                  placeholder="Escribe el deporte..." (keyup)="filterDeportes($event)">
+                <div>
+                  <ul class="list-group mt-2">
+                    <li class="list-group-item" *ngFor="let deporte of filteredDeportes" (click)="seleccionarDeporte(deporte)">{{ deporte.nombre }}</li>
+                  </ul>
+                </div>
               </div>
               <div class="col-6">
                 <label for="">Función</label>
@@ -152,8 +153,8 @@
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoBizum" formControlName="tipoPago"
-                        [(ngModel)]="selectedFormaPago" [value]="2">
+                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoBizum"
+                        formControlName="tipoPago" [(ngModel)]="selectedFormaPago" [value]="2">
                       <label class="form-check-label" for="pagoBizum">
                         Bizum
                       </label>
@@ -166,16 +167,16 @@
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoCaja" formControlName="tipoPago"
-                        [(ngModel)]="selectedFormaPago" [value]="4">
+                      <input class="form-check-input" type="radio" name="tipoPago" id="pagoCaja"
+                        formControlName="tipoPago" [(ngModel)]="selectedFormaPago" [value]="4">
                       <label class="form-check-label" for="pagoCaja">
                         Caja
                       </label>
                     </div>
                     <p class="card-text font-weight-bold">Cuenta CaixaBank: ES-90-2100-3421-54-2200159778</p>
                   </div>
-                </div>    
-                
+                </div>
+
               </div>
             </div>
 

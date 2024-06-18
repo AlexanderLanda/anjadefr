@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 import { AfiliadosFuncionDto } from '../../Model/AfiliadosFuncionDto';
 import { DeporteService } from '../DeporteService';
 import { DeportesDto } from '../../Model/DeportesDto';
@@ -17,5 +17,21 @@ export class DeporteServiceImpl implements DeporteService {
     return this.http.get<DeportesDto[]>(this.apiUrl);
   }
 
+  saveOrUpdate(datosFormulario: any): Observable<DeportesDto> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
 
+    return this.http.post<DeportesDto>(`${this.apiUrl}`, datosFormulario, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('Error en la solicitud:', error);
+    return throwError('Hubo un error en la solicitud. Por favor, inténtelo de nuevo más tarde.');
+  }
 }
