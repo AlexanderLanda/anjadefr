@@ -30,6 +30,8 @@ import { OriginInterceptor } from '../../Core/OriginInterceptor';
 import { PROVINCIAS } from '../../constants/provinces';
 import { CATEGORIAS } from '../../constants/afiliadoscategoria';
 import { DEPORTES } from '../../constants/deportes';
+import { FUNCIONES } from '../../constants/afiliadosFunciones';
+import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailServiceImpl';
 
 
 
@@ -64,7 +66,7 @@ export class RegistroComponentComponent {
   emailExists: boolean = false;
   hide: boolean = true;
   registroForm: FormGroup;
-  afiliadosFunciones: AfiliadosFuncionDto[] | undefined;
+  afiliadosFunciones: AfiliadosFuncionDto[] = FUNCIONES;
   usuariosRoles: UsuariosRolDto[] | undefined;
   deportes: DeportesDto[] = DEPORTES;
   categorias: AfiliadosCategoriasDto[] = CATEGORIAS;
@@ -133,7 +135,8 @@ export class RegistroComponentComponent {
     private federacionService: FederacionServiceImpl,
     private tipoDocumentacionService: TipoDocumentacionServiceImpl,
     private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private sendEmailService: SendEmailServiceImpl) {
     this.registroForm = this.formBuilder.group({
       apellidos: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
@@ -223,10 +226,11 @@ export class RegistroComponentComponent {
 
   cargarFuncionesDeAfiliadosComboBox() {
 
+    /*
     this.afiliadosFuncionService.getAfiliadosFuncion().subscribe(afiliadosRoles => {
       this.afiliadosFunciones = afiliadosRoles;
       console.log(afiliadosRoles);
-    })
+    })*/
   }
 
   cargarCategoriasDeAfiliadosComboBox() {
@@ -328,7 +332,7 @@ export class RegistroComponentComponent {
           datosFormulario.deporte = deporteDto;
           
         }
-
+      }
         //tipo de Documentacion
         if (typeof this.tiposDocumentaciones !== 'undefined') {
           const tipoDocumentacionObject = this.tiposDocumentaciones.find(loc => loc.id === datosFormulario.tipoDocumento);
@@ -383,6 +387,7 @@ export class RegistroComponentComponent {
 
 
         console.info(datosFormulario)
+        
         this.usuariosService.saveOrUpdate(datosFormulario).subscribe(
           response => {
             console.log('Datos registrados con éxito:', response);
@@ -403,7 +408,7 @@ export class RegistroComponentComponent {
           error => {
             this.isLoading = false;
             console.error('Error al registrar los datos:', error);
-            alert('Debe completar todos los datos de caracter obligatorios(*)');
+            alert('Tenemos problemas al registrar los datos. Por favor refresque o actualice la página(F5) y vuelva a intentarlo. Si el problema sigue, contacte con administración.');
             // Manejo de errores
           }
         );
@@ -413,18 +418,15 @@ export class RegistroComponentComponent {
         const campoInvalido = Object.keys(this.registroForm.controls).find(key => this.registroForm.get(key)?.invalid);
         if (campoInvalido && this.camposLegibles[campoInvalido]) {
           const nombreCampo = this.camposLegibles[campoInvalido];
-          console.error(`El ${nombreCampo} ya existe. Revise los campos.`);
+          console.error(`El ${nombreCampo} tiene error o esta vacio.`);
           alert(`Error: El ${nombreCampo} tiene error o esta vacio.`);
-        } else {
+        } 
+        else {
           console.error('Formulario no válido o el correo ya existe. Revise los campos.');
-          alert('Error: El formulario no es válido o el correo ya existe.');
+          alert('Error: El formulario no es válido, Debe completar todos los datos de caracter obligatorios(*) o el correo ya existe.');
         }
-        //console.error('Formulario no válido. Revise los campos.');
-        //alert('Tiene errores en los datos, revise cuidadosamente antes de registrarlos. Y asegurese de proporcionar todos los datos solicitados en el formulario.');
-
       }
     }
-  }
 
 
 
