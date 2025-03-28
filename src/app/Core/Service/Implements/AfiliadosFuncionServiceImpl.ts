@@ -13,7 +13,6 @@ export class AfiliadosFuncionServiceImpl implements AfiliadosFuncionService {
   private apiUrl = environment.apiUrl+'api/v1/afiliadosfuncion'; // URL del servicio en Spring Boot
   constructor(private http: HttpClient) { }
   getAfiliadosFuncion(): Observable<AfiliadosFuncionDto[]> {
-  console.log(this.apiUrl);
     return this.http.get<AfiliadosFuncionDto[]>(this.apiUrl);
   }
 

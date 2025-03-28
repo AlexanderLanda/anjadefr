@@ -414,11 +414,9 @@ export class RegistroComponent {
     }
 
     updateLocalidades() {
-      console.log("SELECCION PROVINCIA: ", this.registroForm.value.afiliadosCategoria)
       //this.registroForm.value.localidad.id=this.registroForm.value.provincia.id
       const provinciaId = Number(this.registroForm.value.provincia); // Convertir el valor a número
       this.filteredLocalidades = this.localidades?.filter(loc => loc.id === provinciaId);
-      console.info("Localidad", this.filteredLocalidades)
     }
 
     seleccionarDeporte(deporte: DeportesDto) {

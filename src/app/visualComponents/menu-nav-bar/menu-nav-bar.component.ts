@@ -72,7 +72,6 @@ export class MenuNavBarComponent implements OnInit, OnDestroy {
   downloadEstatutos() {
     const url = 'ficheros/documentos/estatutos.docx';
     window.location.href = url;
-    console.log('Descarga realizada con éxito');
   }
 
   logout(): void {

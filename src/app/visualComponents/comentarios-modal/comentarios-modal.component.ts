@@ -94,10 +94,8 @@ export class ComentariosModalComponent implements OnInit {
       if (Object.keys(observables).length > 0) {
         forkJoin(observables).subscribe(comentariosConNombres => {
           this.comentariosConNombres = Object.values(comentariosConNombres);
-          console.log("Comentarios con nombres:", this.comentariosConNombres);
         });
       } else {
-        console.log("No se encontraron comentarios con idAfiliacion.");
         this.comentariosConNombres = [];
       }
     }
@@ -147,12 +145,10 @@ export class ComentariosModalComponent implements OnInit {
       idAfiliacion: this.isUserLoggedIn ? this.idAfiliacion : this.idAfiliacion
     };
     this.crearComentario = false;
-    console.log("NOTICIA ID: " + idNoticia)
     // Llamar al servicio para agregar el comentario
     this.noticiaService.agregarComentario(idNoticia, comentario).subscribe({ // Se usa la sintaxis de objeto para manejar la respuesta del observable
       next: (response) => { // Maneja la respuesta exitosa
         this.isSendingComment = false;
-        console.log('Comentario agregado:', response);
         this.data?.comentarios.push(response);
         this.comentarioTexto = '';
         this.idAfiliacion = '';
@@ -177,7 +173,6 @@ export class ComentariosModalComponent implements OnInit {
     this.isSendingComment = true;
     this.noticiaService.actualizarComentarios(this.noticiaId, this.comentarios).subscribe({
       next: (response) => {
-        console.log('Comentarios actualizados:', response);
         this.isSendingComment = false;
         // Emitir el evento para notificar que los comentarios han sido actualizados
         this.comentariosEditados.emit();

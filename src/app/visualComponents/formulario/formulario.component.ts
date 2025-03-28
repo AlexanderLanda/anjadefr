@@ -58,7 +58,6 @@ export  class FormularioComponent implements OnInit{
 
   constructor(
   ){
-    console.log('Datos del usuario:', this.usuario);
     this.formularioForm = this.formBuilder.group({
       nombreApellidos: [this.usuario?.apellidos, [Validators.required]],//tomar de los datos de usuario
       localidad: [this.usuario?.localidad, [Validators.required]],//toar de los datos del usuario
@@ -113,7 +112,6 @@ export  class FormularioComponent implements OnInit{
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['usuario']) {
-      console.log('Usuario recibido:', this.usuario);
     }
   }
 
@@ -151,8 +149,6 @@ export  class FormularioComponent implements OnInit{
     this.cuestionarioService.saveOrUpdate(datosFormulario).subscribe(
       response => {
         this.isLoading = false;
-        console.log('Success!', response);
-        console.log('Datos registrados con éxito:', response);
         this.router.navigate(['/home']); 
         // Aquí puedes agregar cualquier otra lógica después de enviar los datos
       },

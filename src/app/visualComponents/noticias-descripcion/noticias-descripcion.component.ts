@@ -36,7 +36,6 @@ export class NoticiasDescripcionComponent implements OnChanges{
 
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['descripcion']) {
-        console.log("Nueva descripción:", this.descripcion);
       }
     }
 

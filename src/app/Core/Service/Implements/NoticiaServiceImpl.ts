@@ -51,7 +51,6 @@ export class NoticiaServiceImpl {
 
   agregarComentario(noticiaId: number, comentario: Comentario): Observable<Comentario> {
     const url = `${this.apiUrl}/${noticiaId}/comentarios`;
-    console.log("COmentario a back:  "+comentario)
     return this.http.post<Comentario>(url, comentario);
   }
 
@@ -64,7 +63,6 @@ export class NoticiaServiceImpl {
 
   actualizarComentarios(noticiaId: number, comentarios: Comentario[]) {
     const url = `${this.apiUrl}/${noticiaId}/comentarios`;
-    console.log("COmentario a back:  "+comentarios)
     return this.http.put<Comentario[]>(url, comentarios);
   }
 

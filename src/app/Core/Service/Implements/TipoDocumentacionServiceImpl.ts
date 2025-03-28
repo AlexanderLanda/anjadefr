@@ -16,7 +16,6 @@ import { environment } from '../../../../environments/environment';
     
     constructor(private http: HttpClient) { }
     getTipoDocumentacion(): Observable<TipoDocumentoDto[]> {
-      console.log('apiUrl tipo documento',this.apiUrl);
       return this.http.get<TipoDocumentoDto[]>(this.apiUrl);
     }
   

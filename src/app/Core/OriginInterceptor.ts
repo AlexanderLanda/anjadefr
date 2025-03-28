@@ -10,7 +10,6 @@ export class OriginInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // Obtener la URL de origen de la solicitud
     const origin = request.urlWithParams;
-    console.log('La solicitud se originó desde:', origin);
 
     // Continuar con la solicitud
     return next.handle(request);

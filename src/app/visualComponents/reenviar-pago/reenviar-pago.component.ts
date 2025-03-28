@@ -41,7 +41,6 @@ export class ReenviarPagoComponent implements OnInit {
       return;
     }
     else{
-      console.log('El ID de afiliación:'+this.idAfiliacion )
     }
 
     this.paymentService.pay(tipoPago, this.idAfiliacion);

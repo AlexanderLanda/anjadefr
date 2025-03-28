@@ -61,7 +61,6 @@ export class CrearNoticiasComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.noticiaAEditar) {
-      console.log(this.noticiaAEditar)
       this.esEdicion = true;
       this.noticiaForm.patchValue(this.noticiaAEditar);
       this.noticiaForm.get('imagenesLinks')?.setValue(this.noticiaAEditar.imagenes[0].urlImagen) // Llena el formulario con los datos
@@ -170,22 +169,18 @@ export class CrearNoticiasComponent implements OnInit {
   onCheckboxChange() {
     if (!this.isChecked) {
       this.isChecked = true;
-      console.log('Checkbox marcado');
       // Realiza acciones cuando el checkbox está marcado
     } else {
       this.isChecked = false;
-      console.log('Checkbox desmarcado');
       // Realiza acciones cuando el checkbox está desmarcado
     }
   }
   onImagenCheckboxChange() {
     if (!this.isImagenPropia) {
       this.isImagenPropia = true;
-      console.log('Checkbox imagen marcado');
       // Realiza acciones cuando el checkbox está marcado
     } else {
       this.isImagenPropia = false;
-      console.log('Checkbox imagen desmarcado');
       // Realiza acciones cuando el checkbox está desmarcado
     }
   }
@@ -211,7 +206,6 @@ export class CrearNoticiasComponent implements OnInit {
   }
 
   editarComentarios(noticia: Noticia): void {
-    console.log(noticia.id)
     if (!noticia.id) {
       console.error('La noticia no tiene un ID válido.');
       return;

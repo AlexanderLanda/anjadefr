@@ -105,7 +105,6 @@ export class ModalEditarComponent {
 
 
   ngOnInit() {
-    console.log("Fecha Afiiacion:" + this.data.fechaAfiliacion);
     this.registroForm = this.formBuilder.group({
       id_user: [this.data.id_user, [Validators.required]],
       apellidos: [this.data.apellidos, [Validators.required]],
@@ -131,7 +130,6 @@ export class ModalEditarComponent {
       idAfiliacion: [this.data.idAfiliacion, [Validators.required]],
       fechaAfiliacion: [this.data.fechaAfiliacion, [Validators.required]],
     }, { validators: this.passwordMatchValidator });
-    console.log('Valor de usuariorol:', this.data.usuariorol.id);
 
     this.cargarFuncionesDeAfiliadosComboBox();
     this.cargarDeportesComboBox();
@@ -154,8 +152,6 @@ export class ModalEditarComponent {
   checkRoleAndStatus() {
     const selectedRole = this.registroForm.get('usuariorol')?.value;
     const selectedStatus = this.registroForm.get('estadoCuenta')?.value;
-    console.log("rol", selectedRole)
-    console.log("estado", selectedStatus)
     // Define the IDs of the roles that should enable the password fields
     const rolesRequiringPassword: string | any[] = [2, 4, 6, 7];//Administrador, comisionado, presidente secretaria, presidente
     const activeStatus = 1; // Assuming 'activo' status has ID 1
@@ -366,12 +362,11 @@ export class ModalEditarComponent {
       this.usuariosService.saveOrUpdate(datosFormulario).subscribe(
         response => {
           this.isLoading = false;
-          console.log('Datos registrados con éxito:', response);
+          console.log('Datos registrados con éxito:');
           // Aquí puedes agregar cualquier otra lógica después de enviar los datos
           this.usuarioRegistrado = response;
           this.activeModal.close('Close click')
           this.dataService.updateData();
-          console.log('Valor formulario:', this.mostrarFormulario);
         },
         error => {
           console.error('Error al registrar los datos:', error);
@@ -382,8 +377,6 @@ export class ModalEditarComponent {
     else {
       // El formulario no es válido, puedes mostrar un mensaje de error o realizar otra acción
       console.error('Formulario no válido. Revise los campos.');
-      console.log('Estado del formulario:', this.registroForm);
-      console.log('Campos inválidos:', this.registroForm.controls);
       Object.keys(this.registroForm.controls).forEach(key => {
         const control = this.registroForm.get(key);
         if (control?.invalid) {

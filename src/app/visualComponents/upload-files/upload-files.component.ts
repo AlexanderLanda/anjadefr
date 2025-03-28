@@ -27,8 +27,9 @@ export class UploadFilesComponent implements OnInit {
   
 
   private deportesService = inject(DeporteServiceImpl);
-
-  constructor(private fileService: UploadFilesServiceImpl, private reglamentosService: ReglamentosFileServiceImpl,    
+  private fileService = inject( UploadFilesServiceImpl);
+  
+  constructor( private reglamentosService: ReglamentosFileServiceImpl,    
     private formBuilder: FormBuilder,
   ) {
     this.deportesForm = this.formBuilder.group({

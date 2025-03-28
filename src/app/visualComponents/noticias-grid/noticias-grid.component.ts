@@ -98,7 +98,7 @@ export class NoticiasGridComponent implements OnInit {
     if (noticia.imagenes && noticia.imagenes.length > 0) {
       const imagen = noticia.imagenes[0];
       if (imagen.urlImagen) {
-        console.log(
+        console.error(
           `La imagen ${imagen.urlImagen} no se pudo cargar. Intentando con la imagen local.`
         );
         imagen.urlImagen = null;
@@ -111,7 +111,6 @@ export class NoticiasGridComponent implements OnInit {
 
   viewDetails(event: Event, id: number) {
     event.preventDefault();
-    console.log(id)
     this.router.navigate(['/noticias-reader', id]);
   }
 

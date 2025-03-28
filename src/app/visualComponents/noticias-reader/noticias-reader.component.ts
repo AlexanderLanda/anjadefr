@@ -30,7 +30,6 @@ export class NoticiasReaderComponent {
       this.noticiaService.obtenerNoticiasByID(Number(id)).subscribe(
         (noticia) => {
           this.noticia = noticia;
-          console.log(this.noticia);
           
         },
         (error) => {
@@ -62,7 +61,7 @@ export class NoticiasReaderComponent {
     if (noticia.imagenes && noticia.imagenes.length > 0) {
       const imagen = noticia.imagenes[0];
       if (imagen.urlImagen) {
-        console.log(
+        console.error(
           `La imagen ${imagen.urlImagen} no se pudo cargar. Intentando con la imagen local.`
         );
         imagen.urlImagen = null;
@@ -92,4 +91,17 @@ mostrarComentarios(noticia: Noticia): void {
       }
     });
   }
+
+  get descripcionFormateada(): string {
+    if(this.noticia?.descripcion){
+      return this.noticia.descripcion
+      .replace(/&nbsp;/g, " ")  // Reemplazar espacios no rompibles
+      .replace(/<p><\/p>/g, "") // Eliminar párrafos vacíos
+      .replace(/\n/g, "<br>");  // Convertir saltos de línea en `<br>`
+  
+    }
+    return '';
+ }
+
+
 }

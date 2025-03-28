@@ -13,6 +13,5 @@ export  class EstatutosComponent {
     // Descargar el documento Word
     window.location.href = url;
     // Imprimir mensaje en la consola
-    console.log('Descarga realizada con éxito');
   }
 }

@@ -56,9 +56,7 @@ export class NoticiasAnjadeComponent {
 
     if (this.isUserLoggedIn) {
       this.idAfiliacion = this.authService.getIdAfiliacion();
-      console.log(this.idAfiliacion);
     }
-    console.log(this.tipoNoticia);
   }
 
   cargarNoticias() {
@@ -98,7 +96,7 @@ export class NoticiasAnjadeComponent {
     if (noticia.imagenes && noticia.imagenes.length > 0) {
       const imagen = noticia.imagenes[0];
       if (imagen.urlImagen) {
-        console.log(
+        console.error(
           `La imagen ${imagen.urlImagen} no se pudo cargar. Intentando con la imagen local.`
         );
         imagen.urlImagen = null;
@@ -151,7 +149,6 @@ export class NoticiasAnjadeComponent {
       idAfiliacion: this.isUserLoggedIn ? this.idAfiliacion : this.idAfiliacion,
     };
 
-    console.log('NOTICIA ID: ' + noticia.id);
     if (!noticia.id) {
       console.error('La noticia no tiene un ID válido.');
       return;
@@ -159,7 +156,6 @@ export class NoticiasAnjadeComponent {
     this.noticiaService.agregarComentario(noticia.id, comentario).subscribe(
       (response) => {
         noticia.mostrarFormulario = !noticia.mostrarFormulario;
-        console.log('Comentario agregado:', response);
         this.comentarioTexto = '';
         this.idAfiliacion = '';
         window.location.reload();

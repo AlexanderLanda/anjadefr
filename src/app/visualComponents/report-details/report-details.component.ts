@@ -41,6 +41,7 @@ export class ReportDetailsComponent implements OnInit {
     if (reportId) {
       this.loadReportDetails(+reportId);
     }
+
   }
 
   loadReportDetails(id: number) {
@@ -54,6 +55,14 @@ export class ReportDetailsComponent implements OnInit {
       }
     );
   }
+
+  get descripcionFormateada(): string {
+    return this.report.descripcion
+      .replace(/&nbsp;/g, " ")  // Reemplazar espacios no rompibles
+      .replace(/<p><\/p>/g, "") // Eliminar párrafos vacíos
+      .replace(/\n/g, "<br>");  // Convertir saltos de línea en `<br>`
+  }
+  
 
   loadAttachments(reportId: number) {
     this.reportService.getAttachments(reportId).subscribe(
